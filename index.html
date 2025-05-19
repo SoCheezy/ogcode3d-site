@@ -1,33 +1,27 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OGCODE3D — Additive Manufacturing Projects</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #222;
-    }
-    header {
       background: #000;
       color: #fff;
-      padding: 2rem;
+    }
+    header {
       text-align: center;
+      padding: 2rem;
     }
     header h1 {
-      margin: 0;
       font-size: 2.5rem;
+      margin: 0;
     }
     header p {
-      margin-top: 0.5rem;
       font-style: italic;
-    }
-    nav {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
     nav a {
       color: #fff;
@@ -38,44 +32,57 @@
     .projects {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 2rem;
       padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
     }
-    .card {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+    .lightbox {
+      position: relative;
+      background: #111;
       overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-    .card img {
       width: 100%;
       height: auto;
+    }
+    .lightbox-media {
+      position: relative;
+      display: none;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: none;
+    }
+    .lightbox-media.active {
       display: block;
     }
-    .card-body {
-      padding: 1rem;
+    .controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 1;
     }
-    .card-title {
-      font-size: 1.2rem;
-      margin: 0 0 0.5rem;
+    .controls button {
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      font-size: 2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .card-title, .tags {
+      text-align: center;
+      margin-top: 1rem;
     }
     .tags {
       font-size: 0.9rem;
-      color: #666;
+      color: #ccc;
     }
     footer {
-      background: #eee;
-      text-align: center;
+      background: #111;
       padding: 1rem;
+      text-align: center;
       font-size: 0.9rem;
-    }
-    @media (max-width: 800px) {
-      .projects {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -91,16 +98,113 @@
   </header>
 
   <main id="projects" class="projects">
-    <div class="card"><img src="https://via.placeholder.com/600x400" alt="BMX Pedal Cover" /><div class="card-body"><h3 class="card-title">Stainless Steel BMX Pedal Cover</h3><p class="tags">Metal AM · Functional Part</p></div></div>
-    <div class="card"><img src="https://via.placeholder.com/600x400" alt="Street Footwear" /><div class="card-body"><h3 class="card-title">Street Footwear</h3><p class="tags">TPU · Wearable Design</p></div></div>
-    <div class="card"><img src="https://via.placeholder.com/600x400" alt="High Fashion Jewelry" /><div class="card-body"><h3 class="card-title">Stainless Steel Jewelry</h3><p class="tags">Fashion · DfAM · Metal</p></div></div>
-    <div class="card"><img src="https://via.placeholder.com/600x400" alt="Chain Link for Clothing" /><div class="card-body"><h3 class="card-title">Chain Link for Clothing</h3><p class="tags">Fashion · Structural</p></div></div>
-    <div class="card"><img src="https://via.placeholder.com/600x400" alt="Tupac Grinder" /><div class="card-body"><h3 class="card-title">Tupac Grinder</h3><p class="tags">Cultural · Artistic · Functional</p></div></div>
-    <div class="card"><img src="https://via.placeholder.com/600x400" alt="Mike Tyson Grinder" /><div class="card-body"><h3 class="card-title">Mike Tyson Grinder</h3><p class="tags">Cultural · Artistic · Functional</p></div></div>
+    <div class="card">
+      <div class="lightbox">
+        <img class="lightbox-media active" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Dynasty/IMG-20250511-WA0003.jpg" alt="BMX Pedal Cover">
+        <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Dynasty/488197435_718774673809746_7509604044176679200_n.jpg" alt="BMX Detail 2">
+        <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Dynasty/WhatsApp%20Image%202025-05-11%20at%2011.34.48_cc466c06.jpg" alt="BMX Detail 3">
+        <div class="controls">
+          <button onclick="prev(this)" style="opacity: 0; pointer-events: auto;">‹</button>
+          <button onclick="next(this)" style="opacity: 0; pointer-events: auto;">›</button>
+        </div>
+      </div>
+      <div class="card-title">Stainless Steel BMX Pedal Cover</div>
+      <div class="tags">Metal AM · Functional Part</div>
+    </div>
+
+    <!-- Repeat this block for each project -->
+    <!-- Example: Street Footwear -->
+    <div class="card">
+      <div class="lightbox">
+        <img class="lightbox-media active" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/The%20most%20Hated/025BFE31BC05EAA1A75D1032A53992AB.jpg" alt="Footwear 1">
+        <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/The%20most%20Hated/18FAB865A5A8FF36AB8C68FEDDEF383E.jpg" alt="Footwear 2">
+        <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/The%20most%20Hated/EDB32FC683800B55B20334802804EAA0.jpg" alt="Footwear 3">
+        <div class="controls">
+          <button onclick="prev(this)" style="opacity: 0; pointer-events: auto;">‹</button>
+          <button onclick="next(this)" style="opacity: 0; pointer-events: auto;">›</button>
+        </div>
+      </div>
+      <div class="card-title">Street Footwear</div>
+      <div class="tags">EVA · Wearable Design</div>
+    </div>
+
+    <div class="card">
+  <div class="lightbox">
+    <img class="lightbox-media active" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Liuba/Screenshot%202025-05-18%20204630.png" alt="Jewelry 1">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Liuba/Screenshot%202025-05-18%20204745.png" alt="Jewelry 2">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Liuba/Screenshot%202025-05-18%20204833.png" alt="Jewelry 3">
+    <div class="controls">
+          <button onclick="prev(this)" style="opacity: 0; pointer-events: auto;">‹</button>
+          <button onclick="next(this)" style="opacity: 0; pointer-events: auto;">›</button>
+    </div>
+  </div>
+  <div class="card-title">Stainless Steel Jewelry</div>
+  <div class="tags">Fashion · DfAM · Metal</div>
+</div>
+
+<div class="card">
+  <div class="lightbox">
+    <img class="lightbox-media active" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/d-eras/final/Screenshot%202025-05-18%20165928.png" alt="Chain Link 1">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/d-eras/final/Screenshot%202025-05-18%20170104.png" alt="Chain Link 2">
+    <video class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/d-eras/final/Untitled%20design.mp4" controls muted></video>
+    <div class="controls">
+          <button onclick="prev(this)" style="opacity: 0; pointer-events: auto;">‹</button>
+          <button onclick="next(this)" style="opacity: 0; pointer-events: auto;">›</button>
+    </div>
+  </div>
+  <div class="card-title">Chain Link for Clothing</div>
+  <div class="tags">Fashion · Structural</div>
+</div>
+
+<div class="card">
+  <div class="lightbox">
+    <img class="lightbox-media active" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Cripshop/tupac/DSC_0123.JPG" alt="Tupac 1">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Cripshop/tupac/DSC_0125.JPG" alt="Tupac 2">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Cripshop/tupac/DSC_0129.JPG" alt="Tupac 3">
+    <div class="controls">
+          <button onclick="prev(this)" style="opacity: 0; pointer-events: auto;">‹</button>
+          <button onclick="next(this)" style="opacity: 0; pointer-events: auto;">›</button>
+    </div>
+  </div>
+  <div class="card-title">Tupac Grinder</div>
+  <div class="tags">Cultural · Artistic · Functional</div>
+</div>
+
+<div class="card">
+  <div class="lightbox">
+    <img class="lightbox-media active" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Cripshop/tyson/final/DSC_0147.JPG" alt="Tyson 1">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Cripshop/tyson/final/DSC_0148.JPG" alt="Tyson 2">
+    <img class="lightbox-media" src="https://raw.githubusercontent.com/SoCheezy/ogcode3d-site-v2/main/photos/Cripshop/tyson/final/DSC_0150.JPG" alt="Tyson 3">
+    <div class="controls">
+          <button onclick="prev(this)" style="opacity: 0; pointer-events: auto;">‹</button>
+          <button onclick="next(this)" style="opacity: 0; pointer-events: auto;">›</button>
+    </div>
+  </div>
+  <div class="card-title">Mike Tyson Grinder</div>
+  <div class="tags">Cultural · Artistic · Functional</div>
+</div>
   </main>
 
   <footer>
     &copy; 2025 OGCODE3D — Additive Manufacturing by SoCheezy
   </footer>
-</body>
 
+  <script>
+    function next(button) {
+      const box = button.closest('.lightbox');
+      const items = box.querySelectorAll('.lightbox-media');
+      let index = [...items].findIndex(el => el.classList.contains('active'));
+      items[index].classList.remove('active');
+      items[(index + 1) % items.length].classList.add('active');
+    }
+
+    function prev(button) {
+      const box = button.closest('.lightbox');
+      const items = box.querySelectorAll('.lightbox-media');
+      let index = [...items].findIndex(el => el.classList.contains('active'));
+      items[index].classList.remove('active');
+      items[(index - 1 + items.length) % items.length].classList.add('active');
+    }
+  </script>
+</body>
+</html>
