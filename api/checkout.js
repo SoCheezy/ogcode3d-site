@@ -333,7 +333,7 @@ module.exports = async (req, res) => {
     const msg = String(e && e.message || e);
     console.error('checkout', msg);
     // short reason code for troubleshooting (no keys or personal data)
-    const stage = /login failed \((\d+)\)/.test(msg) ? 'viva-login-' + RegExp.$1
+    const stage = /login failed \((\d+)\)(.*)/.test(msg) ? 'viva-login-' + RegExp.$1 + RegExp.$2
       : /did not create the order \((\d+)\): (.{0,160})/.test(msg) ? 'viva-order-' + RegExp.$1 + ': ' + RegExp.$2
       : /sheet/i.test(msg) ? 'sheet: ' + msg.slice(0, 80) : 'other';
     return res.status(502).json({ error: 'Checkout could not be started.', stage });
