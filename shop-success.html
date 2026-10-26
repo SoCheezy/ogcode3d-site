@@ -40,12 +40,14 @@
       failed: 'The payment did not go through, so nothing was charged. <a href="shop.html">Back to your cart</a> to try again.',
       unknown: 'Your order is in. If the payment went through you will get a confirmation email within a few minutes. If it does not arrive, write to <a href="mailto:ogcode3d@gmail.com">ogcode3d@gmail.com</a>.'
     };
-    function show(s){ el.innerHTML = MSG[s] || MSG.unknown; if(s === 'paid' || s === 'pending'){ try{ localStorage.removeItem('ogcode-cart'); }catch(e){} document.querySelectorAll('.badge').forEach(function(b){ b.remove(); }); } }
+    function show(s, kind){
+      if(kind === 'deposit' && (s === 'paid' || s === 'pending')){ el.innerHTML = s === 'paid' ? 'Your deposit went through. Thank you! We will be in touch to start your project, and a confirmation is on its way to your email.' : MSG.pending; return; }
+      el.innerHTML = MSG[s] || MSG.unknown; if(s === 'paid' || s === 'pending'){ try{ localStorage.removeItem('ogcode-cart'); }catch(e){} document.querySelectorAll('.badge').forEach(function(b){ b.remove(); }); } }
     if(!t && !s){ show('unknown'); return; }
     var tries = 0, qs = t ? 't=' + encodeURIComponent(t) : 's=' + encodeURIComponent(s);
     (function check(){
       fetch('/api/payment-status?' + qs).then(function(r){ return r.json(); }).then(function(j){
-        show(j.status);
+        show(j.status, j.kind);
         if(j.status === 'pending' && ++tries < 20) setTimeout(check, 15000);
       }).catch(function(){ show('unknown'); });
     })();

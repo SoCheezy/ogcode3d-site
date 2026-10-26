@@ -9,20 +9,22 @@ module.exports = async (req, res) => {
   const q = req.query || {};
   const t = String(q.t || ''), s = String(q.s || '');
   try {
-    let status = 'unknown', paid = null;
+    let status = 'unknown', paid = null, kind = 'order';
     if (/^[0-9a-f-]{36}$/i.test(t)) {
       const tx = await viva.getTransaction(t);
       status = tx.status;
-      if (tx.status === 'paid') paid = { type: 'paid', orderCode: tx.orderCode, transactionId: t, amount: tx.amount };
+      if (tx.status === 'paid') paid = viva.paidMessage(tx.merchantTrns, tx.orderCode, t, tx.amount);
+      kind = /^DEP:/.test(tx.merchantTrns) ? 'deposit' : 'order';
     } else if (/^\d{10,20}$/.test(s)) {
       const o = await viva.getOrder(s);
       status = o.status;
-      if (o.status === 'paid') paid = { type: 'paid', orderCode: s, transactionId: '', amount: o.amount };
+      if (o.status === 'paid') paid = viva.paidMessage(o.merchantTrns, s, '', o.amount);
+      kind = /^DEP:/.test(o.merchantTrns) ? 'deposit' : 'order';
     }
     if (paid) {
       try { await viva.sheet(paid); } catch (e) { console.error('payment-status sheet', e && e.message); }
     }
-    return res.status(200).json({ status });
+    return res.status(200).json({ status, kind });
   } catch (e) {
     console.error('payment-status', e && e.message);
     return res.status(200).json({ status: 'unknown' });

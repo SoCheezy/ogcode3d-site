@@ -63,7 +63,7 @@ async function getTransaction(transactionId) {
   const code = (text.match(/"orderCode"\s*:\s*"?(\d{10,20})/i) || [])[1] || '';
   const s = String(j.statusId || '').toUpperCase();
   const status = s === 'F' ? 'paid' : (s === 'A' ? 'pending' : 'failed');
-  return { status, amount: Math.round(Number(j.amount || 0) * 100), orderCode: code, raw: j };
+  return { status, amount: Math.round(Number(j.amount || 0) * 100), orderCode: code, merchantTrns: String(j.merchantTrns || ''), raw: j };
 }
 
 // Look up a payment order by its 16-digit code (Merchant ID + API key).
@@ -77,7 +77,7 @@ async function getOrder(orderCode) {
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error('Viva order lookup failed (' + r.status + ').');
   const st = Number(j.StateId);
-  return { status: st === 3 ? 'paid' : (st === 0 ? 'pending' : 'failed'), amount: Math.round(Number(j.RequestAmount || 0) * 100) };
+  return { status: st === 3 ? 'paid' : (st === 0 ? 'pending' : 'failed'), amount: Math.round(Number(j.RequestAmount || 0) * 100), merchantTrns: String(j.MerchantTrns || '') };
 }
 
 // Key Viva asks for when you verify the webhook URL.
@@ -90,6 +90,13 @@ async function webhookKey() {
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.Key) throw new Error('Could not get the webhook key (' + r.status + '). Check VIVA_MERCHANT_ID and VIVA_API_KEY.');
   return j.Key;
+}
+
+// What a confirmed payment means for the sheet: a shop order, or a project deposit (merchantTrns "DEP:OG-1001").
+function paidMessage(merchantTrns, orderCode, transactionId, amount) {
+  const m = /^DEP:(OG-\d{1,8})$/.exec(String(merchantTrns || ''));
+  return m ? { type: 'deposit', lead: m[1], orderCode, transactionId, amount }
+           : { type: 'paid', orderCode, transactionId, amount };
 }
 
 function checkoutUrl(orderCode) { return HOSTS.web + '/web/checkout?ref=' + orderCode; }
@@ -114,4 +121,4 @@ function readBody(req) {
   return b || {};
 }
 
-module.exports = { LIVE, token, createOrder, getTransaction, getOrder, webhookKey, checkoutUrl, sheet, readBody };
+module.exports = { LIVE, token, createOrder, getTransaction, getOrder, webhookKey, paidMessage, checkoutUrl, sheet, readBody };

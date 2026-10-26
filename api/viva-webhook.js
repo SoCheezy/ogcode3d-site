@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
 
     const tx = await viva.getTransaction(data.TransactionId);
     if (tx.status !== 'paid') return res.status(200).json({ ok: true, status: tx.status });
-    await viva.sheet({ type: 'paid', orderCode: tx.orderCode, transactionId: data.TransactionId, amount: tx.amount });
+    await viva.sheet(viva.paidMessage(tx.merchantTrns, tx.orderCode, data.TransactionId, tx.amount));
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error('viva-webhook', e && e.message);
