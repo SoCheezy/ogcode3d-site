@@ -697,3 +697,6 @@ section[id],[id].block,.pagehead,.sec-head,h1,h2{scroll-margin-top:calc(env(safe
 .ship-to{display:grid;gap:12px;padding:16px 22px 20px;border-top:1px dashed var(--line)}
 .ship-to>.label{margin:0}
 .ship-to .row2{gap:12px}
+.pay-logos{display:block}
+.pay-logos img{display:block;width:100%;height:auto;max-width:429px}
+@media (max-width:519px){.pay-logos img{max-width:276px}}
