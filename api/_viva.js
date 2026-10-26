@@ -21,7 +21,7 @@ let cached = { token: null, until: 0 };
 
 async function token() {
   if (cached.token && Date.now() < cached.until) return cached.token;
-  const id = process.env.VIVA_CLIENT_ID, secret = process.env.VIVA_CLIENT_SECRET;
+  const id = String(process.env.VIVA_CLIENT_ID || '').trim(), secret = String(process.env.VIVA_CLIENT_SECRET || '').trim();
   if (!id || !secret) throw new Error('Viva credentials are missing.');
   const r = await fetch(HOSTS.accounts + '/connect/token', {
     method: 'POST',
@@ -68,13 +68,14 @@ async function getTransaction(transactionId) {
 
 // Key Viva asks for when you verify the webhook URL.
 async function webhookKey() {
-  const id = process.env.VIVA_MERCHANT_ID, key = process.env.VIVA_API_KEY;
+  const id = String(process.env.VIVA_MERCHANT_ID || '').trim(), key = String(process.env.VIVA_API_KEY || '').trim();
   if (!id || !key) throw new Error('Merchant ID / API key missing.');
   const r = await fetch(HOSTS.web + '/api/messages/config/token', {
     headers: { Authorization: 'Basic ' + Buffer.from(id + ':' + key).toString('base64') },
   });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok || !j.Key) throw new Error('Could not get the webhook key (' + r.status + ').');
+  if (!r.ok || !j.Key) throw new Error('Could not get the webhook key (' + r.status + '). Merchant ID length ' + id.length +
+    ', API key length ' + key.length + ', raw lengths ' + String(process.env.VIVA_MERCHANT_ID).length + '/' + String(process.env.VIVA_API_KEY).length + '.');
   return j.Key;
 }
 
