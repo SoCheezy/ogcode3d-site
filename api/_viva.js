@@ -66,6 +66,20 @@ async function getTransaction(transactionId) {
   return { status, amount: Math.round(Number(j.amount || 0) * 100), orderCode: code, raw: j };
 }
 
+// Look up a payment order by its 16-digit code (Merchant ID + API key).
+// Returns { status: 'paid' | 'pending' | 'failed', amount (cents) }.
+async function getOrder(orderCode) {
+  if (!/^\d{10,20}$/.test(String(orderCode || ''))) throw new Error('Bad order code.');
+  const id = String(process.env.VIVA_MERCHANT_ID || '').trim(), key = String(process.env.VIVA_API_KEY || '').trim();
+  const r = await fetch(HOSTS.web + '/api/orders/' + orderCode, {
+    headers: { Authorization: 'Basic ' + Buffer.from(id + ':' + key).toString('base64') },
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error('Viva order lookup failed (' + r.status + ').');
+  const st = Number(j.StateId);
+  return { status: st === 3 ? 'paid' : (st === 0 ? 'pending' : 'failed'), amount: Math.round(Number(j.RequestAmount || 0) * 100) };
+}
+
 // Key Viva asks for when you verify the webhook URL.
 async function webhookKey() {
   const id = String(process.env.VIVA_MERCHANT_ID || '').trim(), key = String(process.env.VIVA_API_KEY || '').trim();
@@ -100,4 +114,4 @@ function readBody(req) {
   return b || {};
 }
 
-module.exports = { LIVE, token, createOrder, getTransaction, webhookKey, checkoutUrl, sheet, readBody };
+module.exports = { LIVE, token, createOrder, getTransaction, getOrder, webhookKey, checkoutUrl, sheet, readBody };

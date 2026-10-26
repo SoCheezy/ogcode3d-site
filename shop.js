@@ -61,9 +61,16 @@
   // back from Viva without paying (the failure address is this page, with ?s=<order code>)
   var back = new URLSearchParams(location.search);
   if(back.get('s') && $('#cart-status')){
-    var st = $('#cart-status'); st.className = 'status err';
-    st.textContent = 'The payment did not go through, so nothing was charged. Your cart is still here: try again, or use another payment method.';
+    var st = $('#cart-status'), code = back.get('s'), tx = back.get('t') || '';
+    st.className = 'status'; st.textContent = 'Checking your payment…';
     try { history.replaceState(null, '', location.pathname); } catch(e){}
+    fetch('/api/payment-status?s=' + encodeURIComponent(code) + (tx ? '&t=' + encodeURIComponent(tx) : ''))
+      .then(function(r){ return r.json(); }).catch(function(){ return {}; })
+      .then(function(j){
+        if(j.status === 'paid' || j.status === 'pending'){ location.replace('shop-success.html?s=' + encodeURIComponent(code) + (tx ? '&t=' + encodeURIComponent(tx) : '')); return; }
+        st.className = 'status err';
+        st.textContent = 'The payment did not go through, so nothing was charged. Your cart is still here: try again, or use another payment method.';
+      });
   }
   if(list) list.addEventListener('click', function(e){
     var b = e.target.closest('[data-q]'); if(!b) return;
