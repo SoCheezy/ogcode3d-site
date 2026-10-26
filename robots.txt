@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /api/
+Disallow: /shop-success.html
+
+Sitemap: https://www.ogcode3d.com/sitemap.xml
