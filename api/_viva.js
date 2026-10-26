@@ -32,11 +32,7 @@ async function token() {
     body: 'grant_type=client_credentials',
   });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok || !j.access_token) {
-    const hid = s => (s.match(/[^\x21-\x7e]/g) || []).length;
-    throw new Error('Viva login failed (' + r.status + ') [' + (j.error || '') + '; id length ' + id.length + ', ends with apps.vivapayments.com: ' +
-      /\.apps\.vivapayments\.com$/.test(id) + ', secret length ' + secret.length + ', hidden characters ' + (hid(id) + hid(secret)) + ']');
-  }
+  if (!r.ok || !j.access_token) throw new Error('Viva login failed (' + r.status + ') [' + (j.error || '') + ']');
   cached = { token: j.access_token, until: Date.now() + Math.max(60, (j.expires_in || 3600) - 120) * 1000 };
   return cached.token;
 }
