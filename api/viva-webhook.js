@@ -6,7 +6,10 @@ const viva = require('./_viva');
 
 module.exports = async (req, res) => {
   try {
-    if (req.method === 'GET') return res.status(200).json({ Key: await viva.webhookKey() });
+    if (req.method === 'GET') {
+      try { return res.status(200).json({ Key: await viva.webhookKey() }); }
+      catch (e) { console.error('viva-webhook key', e && e.message); return res.status(500).json({ error: String(e && e.message || e) }); }
+    }
     if (req.method !== 'POST') return res.status(405).json({ error: 'Use POST.' });
 
     const b = viva.readBody(req);
