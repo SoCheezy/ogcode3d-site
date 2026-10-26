@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cart · OGCODE</title>
+<meta name="description" content="OGCODE is a design and additive manufacturing studio in Athens: fashion, objects and figures printed in polymers, resins and metals, plus training and software.">
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/oxanium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap" style="position:relative">
+    <a class="brand" href="index.html" aria-label="OGCODE home"><svg role="img" aria-label="OGCODE" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1007 182"><path fill-rule="evenodd" d="M0,39 L0,142 L39,181 L129,181 L168,142 L208,181 L297,181 L336,142 L376,181 L466,181 L505,142 L545,181 L635,181 L674,142 L675,181 L803,181 L842,142 L882,181 L972,181 L1006,147 L983,124 L958,149 L896,149 L876,129 L877,107 L959,107 L959,74 L877,74 L876,53 L896,33 L958,33 L983,57 L1006,34 L972,0 L882,0 L843,39 L803,0 L675,0 L674,39 L634,0 L545,0 L506,39 L466,0 L377,0 L337,40 L336,75 L250,75 L250,107 L304,108 L304,128 L283,149 L222,149 L201,128 L201,53 L221,33 L284,33 L309,57 L331,34 L297,0 L208,0 L169,39 L128,0 L39,0ZM708,33 L790,33 L810,53 L810,128 L789,149 L707,148ZM558,33 L621,33 L641,53 L641,129 L622,148 L559,149 L538,128 L538,53ZM370,53 L390,33 L453,33 L482,62 L505,39 L506,141 L482,119 L452,149 L390,149 L370,129ZM52,33 L115,33 L135,53 L135,129 L115,149 L53,149 L32,128 L32,54Z"/></svg><span class="chip3d" aria-hidden="true">3D</span></a>
+    <nav class="nav" aria-label="Main"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html" aria-current="page">Cart</a><span class="sep"></span><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a><a href="request.html">Start a project</a><a href="quote.html" class="pill">Start a print</a></nav>
+    <details class="menu"><summary>Menu</summary><nav class="drop" aria-label="Main"><span class="label">Work</span><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html" aria-current="page">Cart</a><span class="label">Services</span><a href="quote.html">Start a print</a><a href="request.html">Start a project</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav></details>
+  </div>
+</header>
+<main>
+  <section class="pagehead">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs label" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Cart</span></nav>
+        <h1>Cart</h1>
+        <p>Review your order, add your delivery details and pay securely on Viva.com. Everything is made to order and ships from Athens.</p>
+      </div>
+      <div class="meta"><span class="label">Made to order</span><br><span class="label">Ships from Athens</span></div>
+    </div>
+  </section>
+  <div class="temper" role="presentation"></div>
+  <section class="block" style="padding-top:clamp(32px,5vw,56px)">
+    <div class="wrap checkout" id="checkout">
+      <div class="keep-shopping">
+        <p class="label">Keep shopping</p>
+        <a class="ks" href="metachess.html#shop"><img src="photos/mc-ruy-lopez/01.jpg" alt=""><span><b>Metachess</b><span class="muted">Chess games as sculpture</span></span></a>
+        <a class="ks" href="chess.html#shop"><img src="photos/cactus-chess/01.jpg" alt=""><span><b>Chess sets</b><span class="muted">Bishop&#x27;s Square</span></span></a>
+      </div>
+      <aside class="ticket cart" aria-live="polite">
+        <div class="head"><span class="label">Your order</span><span class="label"><b id="cart-count" style="color:var(--ink)">0</b> items</span></div>
+        <p class="hint" id="cart-empty" style="padding:16px 22px 0">Your cart is empty. Find something in <a href="metachess.html#shop">Metachess</a> or <a href="chess.html#shop">Chess sets</a>.</p>
+        <ul class="cart-items" id="cart-items"></ul>
+        <dl>
+          <dt>Subtotal</dt><dd id="cart-sub">€0.00</dd>
+          <dt><label for="cart-region">Ship to</label></dt><dd><div class="select"><select id="cart-region"></select></div></dd>
+          <dt>Shipping</dt><dd id="cart-ship">—</dd>
+        </dl>
+        <form class="ship-to" id="cart-form" autocomplete="on" novalidate>
+          <p class="label">Delivery details</p>
+          <div class="field"><label for="c-name">Full name</label><input type="text" id="c-name" name="name" autocomplete="name" required maxlength="80"></div>
+          <div class="row2">
+            <div class="field"><label for="c-email">Email</label><input type="email" id="c-email" name="email" autocomplete="email" required maxlength="120"></div>
+            <div class="field"><label for="c-phone">Phone</label><input type="tel" id="c-phone" name="phone" autocomplete="tel" required maxlength="30"></div>
+          </div>
+          <div class="field"><label for="c-address">Street and number</label><input type="text" id="c-address" name="address" autocomplete="street-address" required maxlength="160"></div>
+          <div class="row2">
+            <div class="field"><label for="c-city">City</label><input type="text" id="c-city" name="city" autocomplete="address-level2" required maxlength="60"></div>
+            <div class="field"><label for="c-postcode">Postcode</label><input type="text" id="c-postcode" name="postcode" autocomplete="postal-code" required maxlength="12"></div>
+          </div>
+          <div class="field"><label for="c-country">Country</label><div class="select"><select id="c-country" name="country" autocomplete="country" required></select></div></div>
+          <div class="field"><label for="c-notes">Notes (optional)</label><input type="text" id="c-notes" name="notes" maxlength="500" placeholder="Doorbell name, a gift message, a date that suits you"></div>
+        </form>
+        <div class="price"><small>Total</small><span id="cart-total">€0.00</span></div>
+        <div class="foot">
+          <label class="agree"><input type="checkbox" id="cart-terms"><span>I accept the <a href="terms.html" target="_blank">terms of sale</a>, including the <a href="terms.html#withdrawal" target="_blank">14-day withdrawal rules</a>, and have read the <a href="privacy.html" target="_blank">privacy policy</a>.</span></label>
+          <button class="btn" type="button" id="cart-go" disabled>Checkout</button>
+          <p class="status" id="cart-status" role="status"></p>
+          <p>You&#x27;ll pay on Viva.com&#x27;s secure page by card, Apple Pay, Google Pay or IRIS, and get a confirmation by email. Prices include VAT where it applies.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <script type="application/json" id="shop-data">{"currency": "EUR", "products": [{"id": "cactus", "name": "Cactus chess set", "price": 7900, "photo": "photos/cactus-chess/01.jpg"}, {"id": "sushi", "name": "Sushi chess set", "price": 7900, "photo": "photos/sushi-chess/01.jpg"}, {"id": "forest", "name": "Forest chess set", "price": 7900, "photo": "photos/forest-chess/01.jpg"}, {"id": "book", "name": "Book chess set", "price": 6900, "photo": "photos/book-chess/01.jpg"}, {"id": "tube", "name": "Travel ChessTube", "price": 4900, "photo": "photos/travel-chesstube/01.jpg"}, {"id": "magnetic", "name": "Magnetic puzzle chess set", "price": 8900, "photo": "photos/magnetic-chess/01.jpg"}, {"id": "mc-ruy-lopez-resin-black", "name": "Ruy Lopez Trap \u00b7 Resin \u00b7 black", "price": 24900, "photo": "photos/mc-ruy-lopez/01.jpg"}, {"id": "mc-ruy-lopez-resin-white", "name": "Ruy Lopez Trap \u00b7 Resin \u00b7 white", "price": 24900, "photo": "photos/mc-ruy-lopez/02.jpg"}, {"id": "mc-ruy-lopez-nylon-black", "name": "Ruy Lopez Trap \u00b7 Nylon \u00b7 black", "price": 29900, "photo": "photos/mc-ruy-lopez/01.jpg"}, {"id": "mc-ruy-lopez-nylon-white", "name": "Ruy Lopez Trap \u00b7 Nylon \u00b7 white", "price": 29900, "photo": "photos/mc-ruy-lopez/02.jpg"}, {"id": "mc-ruy-lopez-aluminium", "name": "Ruy Lopez Trap \u00b7 Aluminium", "price": 99000, "photo": "photos/mc-ruy-lopez/03.jpg"}, {"id": "mc-ruy-lopez-steel", "name": "Ruy Lopez Trap \u00b7 Stainless steel 316L", "price": 129000, "photo": "photos/mc-ruy-lopez/03.jpg"}, {"id": "mc-spider-resin-black", "name": "Spider Trap \u00b7 Resin \u00b7 black", "price": 24900, "photo": "photos/mc-spider/01.jpg"}, {"id": "mc-spider-resin-white", "name": "Spider Trap \u00b7 Resin \u00b7 white", "price": 24900, "photo": "photos/mc-spider/02.jpg"}, {"id": "mc-spider-nylon-black", "name": "Spider Trap \u00b7 Nylon \u00b7 black", "price": 29900, "photo": "photos/mc-spider/01.jpg"}, {"id": "mc-spider-nylon-white", "name": "Spider Trap \u00b7 Nylon \u00b7 white", "price": 29900, "photo": "photos/mc-spider/02.jpg"}, {"id": "mc-spider-aluminium", "name": "Spider Trap \u00b7 Aluminium", "price": 99000, "photo": "photos/mc-spider/03.jpg"}, {"id": "mc-spider-steel", "name": "Spider Trap \u00b7 Stainless steel 316L", "price": 129000, "photo": "photos/mc-spider/03.jpg"}, {"id": "mc-broken-dreams-resin-black", "name": "Broken Dreams \u00b7 Resin \u00b7 black", "price": 24900, "photo": "photos/mc-broken-dreams/01.jpg"}, {"id": "mc-broken-dreams-resin-white", "name": "Broken Dreams \u00b7 Resin \u00b7 white", "price": 24900, "photo": "photos/mc-broken-dreams/02.jpg"}, {"id": "mc-broken-dreams-nylon-black", "name": "Broken Dreams \u00b7 Nylon \u00b7 black", "price": 29900, "photo": "photos/mc-broken-dreams/01.jpg"}, {"id": "mc-broken-dreams-nylon-white", "name": "Broken Dreams \u00b7 Nylon \u00b7 white", "price": 29900, "photo": "photos/mc-broken-dreams/02.jpg"}, {"id": "mc-broken-dreams-aluminium", "name": "Broken Dreams \u00b7 Aluminium", "price": 99000, "photo": "photos/mc-broken-dreams/03.jpg"}, {"id": "mc-broken-dreams-steel", "name": "Broken Dreams \u00b7 Stainless steel 316L", "price": 129000, "photo": "photos/mc-broken-dreams/03.jpg"}, {"id": "mc-7up-resin-black", "name": "7Up \u00b7 Resin \u00b7 black", "price": 24900, "photo": "photos/mc-7up/01.jpg"}, {"id": "mc-7up-resin-white", "name": "7Up \u00b7 Resin \u00b7 white", "price": 24900, "photo": "photos/mc-7up/02.jpg"}, {"id": "mc-7up-nylon-black", "name": "7Up \u00b7 Nylon \u00b7 black", "price": 29900, "photo": "photos/mc-7up/01.jpg"}, {"id": "mc-7up-nylon-white", "name": "7Up \u00b7 Nylon \u00b7 white", "price": 29900, "photo": "photos/mc-7up/02.jpg"}, {"id": "mc-7up-aluminium", "name": "7Up \u00b7 Aluminium", "price": 99000, "photo": "photos/mc-7up/03.jpg"}, {"id": "mc-7up-steel", "name": "7Up \u00b7 Stainless steel 316L", "price": 129000, "photo": "photos/mc-7up/03.jpg"}, {"id": "mc-fire-resin-black", "name": "Fire \u00b7 Resin \u00b7 black", "price": 24900, "photo": "photos/mc-fire/01.jpg"}, {"id": "mc-fire-resin-white", "name": "Fire \u00b7 Resin \u00b7 white", "price": 24900, "photo": "photos/mc-fire/02.jpg"}, {"id": "mc-fire-nylon-black", "name": "Fire \u00b7 Nylon \u00b7 black", "price": 29900, "photo": "photos/mc-fire/01.jpg"}, {"id": "mc-fire-nylon-white", "name": "Fire \u00b7 Nylon \u00b7 white", "price": 29900, "photo": "photos/mc-fire/02.jpg"}, {"id": "mc-fire-aluminium", "name": "Fire \u00b7 Aluminium", "price": 99000, "photo": "photos/mc-fire/03.jpg"}, {"id": "mc-fire-steel", "name": "Fire \u00b7 Stainless steel 316L", "price": 129000, "photo": "photos/mc-fire/03.jpg"}], "shipping": [{"id": "gr", "label": "Greece \u00b7 courier \u00b7 about 1 week", "amount": 500, "countries": ["GR", "CY"]}, {"id": "eu", "label": "Europe \u00b7 courier \u00b7 about 2 weeks", "amount": 2000, "countries": ["AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"]}, {"id": "gr-f2f", "label": "Athens area \u00b7 by the owner \u00b7 about 1 week", "amount": 10000, "countries": ["GR"]}, {"id": "eu-f2f", "label": "Europe \u00b7 by the owner \u00b7 about 2 weeks", "amount": 100000, "countries": ["AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"]}]}</script>
+</main>
+<div class="temper" role="presentation"></div>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="label">Contact</p>
+      <h2>Got a part in mind?</h2>
+      <p>Send a sketch, a reference photo or a 3D file, then choose the material, the size and your deadline.</p>
+      <div class="cta"><a class="btn" href="quote.html">Start a print</a><a class="btn ghost" href="request.html">Start a project</a></div>
+    </div>
+    <div class="channels">
+      <div class="chan">
+        <div><span class="label">Email</span><br><a class="big" href="mailto:ogcode3d@gmail.com" id="email">ogcode3d@gmail.com</a></div>
+        <button class="btn" type="button" id="copy">Copy</button>
+      </div>
+      <div class="chan">
+        <div><span class="label">Instagram</span><br><a class="big" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">@o.gcode</a></div>
+        <a class="btn" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">Follow ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap mono">
+    <div class="fine-row"><span>© <span id="yr">2026</span> OGCODE. Design-forward additive manufacturing, Athens.</span><nav class="legal-links" aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="legal.html">Legal notice</a></nav></div>
+    <nav aria-label="Footer"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+<script src="shop.js"></script>
+</body>
+</html>

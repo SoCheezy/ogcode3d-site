@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Start a Print · OGCODE</title>
+<meta name="description" content="OGCODE is a design and additive manufacturing studio in Athens: fashion, objects and figures printed in polymers, resins and metals, plus training and software.">
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/oxanium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap" style="position:relative">
+    <a class="brand" href="index.html" aria-label="OGCODE home"><svg role="img" aria-label="OGCODE" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1007 182"><path fill-rule="evenodd" d="M0,39 L0,142 L39,181 L129,181 L168,142 L208,181 L297,181 L336,142 L376,181 L466,181 L505,142 L545,181 L635,181 L674,142 L675,181 L803,181 L842,142 L882,181 L972,181 L1006,147 L983,124 L958,149 L896,149 L876,129 L877,107 L959,107 L959,74 L877,74 L876,53 L896,33 L958,33 L983,57 L1006,34 L972,0 L882,0 L843,39 L803,0 L675,0 L674,39 L634,0 L545,0 L506,39 L466,0 L377,0 L337,40 L336,75 L250,75 L250,107 L304,108 L304,128 L283,149 L222,149 L201,128 L201,53 L221,33 L284,33 L309,57 L331,34 L297,0 L208,0 L169,39 L128,0 L39,0ZM708,33 L790,33 L810,53 L810,128 L789,149 L707,148ZM558,33 L621,33 L641,53 L641,129 L622,148 L559,149 L538,128 L538,53ZM370,53 L390,33 L453,33 L482,62 L505,39 L506,141 L482,119 L452,149 L390,149 L370,129ZM52,33 L115,33 L135,53 L135,129 L115,149 L53,149 L32,128 L32,54Z"/></svg><span class="chip3d" aria-hidden="true">3D</span></a>
+    <nav class="nav" aria-label="Main"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><span class="sep"></span><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a><a href="request.html">Start a project</a><a href="quote.html" aria-current="page" class="pill">Start a print</a></nav>
+    <details class="menu"><summary>Menu</summary><nav class="drop" aria-label="Main"><span class="label">Work</span><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><span class="label">Services</span><a href="quote.html" aria-current="page">Start a print</a><a href="request.html">Start a project</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav></details>
+  </div>
+</header>
+<main>
+  <section class="pagehead">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs label" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Start a print</span></nav>
+        <h1>Start a print</h1>
+        <p>Drop in your 3D models for an instant price. We measure each part and estimate the cost for the material and delivery you pick. Your files stay on your computer until you send the request.</p>
+      </div>
+    </div>
+  </section>
+  <div class="temper" role="presentation"></div>
+  <section class="block" style="padding-top:clamp(32px,5vw,56px)">
+    <div class="wrap quote" id="quote">
+      <div class="form">
+        <p class="notice" id="q-example" hidden>Example prices while we finish setting up. Your confirmed quote may differ.</p>
+        <div class="field">
+          <span class="label">1 · Your models</span>
+          <label class="drop" id="q-drop" for="q-file">
+            <input type="file" id="q-file" accept=".stl" multiple>
+            <span class="drop-in"><b>Drop your models here</b><span class="muted">or click to choose · several files at once is fine</span></span>
+          </label>
+          <p class="status" id="q-status" role="status"></p>
+          <div class="hint model-help" id="q-empty">
+            <p><b>What kind of model?</b> A 3D model of your object saved as an <b>.stl</b> file, the standard file for 3D printing. Most 3D designs can be saved this way.</p>
+            <p><b>Where to find one?</b> Download ready-made models from <a href="https://www.printables.com" target="_blank" rel="noopener">Printables</a>, <a href="https://www.thingiverse.com" target="_blank" rel="noopener">Thingiverse</a> or <a href="https://makerworld.com" target="_blank" rel="noopener">MakerWorld</a>, or export your own design from any 3D software with File → Export → STL.</p>
+            <p><b>No model, or a different file?</b> Send a photo, a sketch or a STEP, OBJ or 3MF file through <a href="request.html">Start a project</a> and we take it from there.</p>
+          </div>
+          <ul class="parts" id="q-parts"></ul>
+        </div>
+        <fieldset class="field"><legend>2 · Units in the file</legend><div class="opts">
+          <label class="opt"><input type="radio" name="unit" value="mm" id="unit-mm" checked><span>Millimetres<small>most common</small></span></label>
+          <label class="opt"><input type="radio" name="unit" value="in" id="unit-in"><span>Inches<small>if the model looks tiny</small></span></label>
+        </div></fieldset>
+        <fieldset class="field"><legend class="legend-row">3 · Technology and material <button type="button" class="help-btn" data-open="tech-dlg" aria-haspopup="dialog">Technologies</button></legend><div id="q-material" class="procs"></div></fieldset>
+        <fieldset class="field colour-step"><legend class="legend-row">4 · Colour and finish <button type="button" class="help-btn" id="q-surprise">Surprise me</button></legend>
+          <div class="colour-ui">
+            <figure class="cprev">
+              <canvas id="q-cprev" tabindex="0" aria-label="Colour preview. Drag or use the arrow keys to rotate."></canvas>
+              <figcaption><span class="label" id="q-ctarget">All files</span><b id="q-cname">Black</b></figcaption>
+              <button type="button" class="lights" id="q-lights" aria-pressed="false">Lights off</button>
+              <span class="drag-hint mono" aria-hidden="true">Drag to rotate</span>
+            </figure>
+            <div class="cpick">
+              <div id="q-swatches"></div>
+              <div class="swg" id="q-finish-wrap"><p class="swg-head">Surface</p><div class="opts">
+                <label class="opt"><input type="radio" name="finish" value="matte" checked><span>Matte</span></label>
+                <label class="opt"><input type="radio" name="finish" value="satin"><span>Satin</span></label>
+                <label class="opt"><input type="radio" name="finish" value="gloss"><span>Gloss</span></label></div></div>
+              <div class="swg" id="q-custom"><p class="swg-head">Custom match <span>we match any colour you need · +15%</span></p>
+                <div class="custom-row"><label class="sw big"><input type="checkbox" id="q-custom-on" aria-label="Use a custom colour"><span class="cpicker"><input type="color" id="q-hex" value="#C9A24A" aria-label="Pick a custom colour"></span></label>
+                <input type="text" id="q-code" placeholder="RAL, Pantone or a brand colour, e.g. RAL 5015" aria-label="Colour code"></div></div>
+              <label class="agree" id="q-perfile-wrap" hidden><input type="checkbox" id="q-perfile"><span>A different colour for each file</span></label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="field"><legend>5 · Delivery</legend><div class="opts" id="q-region" aria-label="Where to"></div><div class="opts" id="q-delivery" style="margin-top:8px"></div><p class="hint">About one week in Greece and two weeks in Europe, from when we confirm your order.</p></fieldset>
+      </div>
+
+      <aside class="ticket" aria-live="polite">
+        <div class="head"><span class="label">Estimate</span><span class="label">Ready in <b id="t-lead" style="color:var(--ink)">—</b></span></div>
+        <div class="price"><small>Estimated total</small><span id="t-price">—</span></div>
+        <dl>
+          <dt>Files</dt><dd id="t-files">0</dd>
+          <dt>Pieces</dt><dd id="t-pieces">0</dd>
+          <dt>Total volume</dt><dd id="t-vol">0 cm³</dd>
+          <dt>Material</dt><dd id="t-mat"></dd>
+          <dt>Colour</dt><dd id="t-col"></dd>
+          <dt>Delivery</dt><dd id="t-eta"></dd>
+        </dl>
+        <p class="hint" id="t-min" hidden style="padding:0 22px">Minimum order applies.</p>
+        <p class="hint warn" id="t-big" hidden style="padding:0 22px 10px"></p>
+        <p class="hint" id="t-large" hidden style="padding:0 22px 10px"></p>
+        <form class="foot" data-send="Sent. We'll check your files and email you a confirmed quote." novalidate>
+          <input type="hidden" name="_subject" value="Instant quote request (STL)">
+          <input type="hidden" name="form" value="quote">
+          <textarea name="estimate" id="q-summary" hidden></textarea>
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="row2">
+            <div class="field"><label for="q-name">Name</label><input type="text" id="q-name" name="name" required autocomplete="name"></div>
+            <div class="field"><label for="q-email">Email</label><input type="email" id="q-email" name="email" required autocomplete="email"></div>
+          </div>
+          <div class="field"><label for="q-notes">Notes (optional)</label><input type="text" id="q-notes" name="notes" placeholder="Deadline, special requests, link to the files…"></div>
+          <button class="btn" type="submit" id="q-send" disabled>Send for a confirmed quote</button>
+          <p class="status" role="status"></p>
+        <p class="hint fine">We use your details only to reply to this request. See the <a href="privacy.html">privacy policy</a>.</p>
+          <p>The estimate includes the delivery you chose. After you send, reply to our email with the STL files attached so we can check them.</p>
+        </form>
+      </aside>
+    </div>
+  </section>
+  <dialog class="dlg" id="tech-dlg" aria-labelledby="tech-dlg-title">
+    <div class="dlg-head"><h2 id="tech-dlg-title">Technologies</h2><button type="button" class="btn ghost dlg-x" data-close>Close</button></div>
+    <p class="muted" style="margin:0 0 14px">Which process fits your part. Not sure? Pick the closest and mention it in the notes.</p>
+    <div class="tech-wrap"><table class="tech">
+          <thead><tr><td></td><th scope="col"><b>FDM</b><span>plastic filament</span></th><th scope="col"><b>SLA</b><span>resin</span></th><th scope="col"><b>SLS</b><span>nylon powder</span></th><th scope="col"><b>SLM</b><span>metal powder</span></th></tr></thead>
+          <tbody><tr><th scope="row">Surface quality<sup>*</sup></th><td><span class="rate" role="img" aria-label="3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td><span class="rate" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td><span class="rate" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="rate" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr><tr><th scope="row">Mechanical properties<sup>**</sup></th><td><span class="rate" role="img" aria-label="3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td><span class="rate" role="img" aria-label="3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td><span class="rate" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td><span class="rate" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr><tr><th scope="row">Dimensional accuracy</th><td><span class="rate" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><small>±0.3 mm</small></td><td><span class="rate" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><small>±0.05–0.2 mm</small></td><td><span class="rate" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><small>±0.3 mm</small></td><td><span class="rate" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><small>±0.1–0.2 mm</small></td></tr><tr><th scope="row">Max part size</th><td>550 × 550 × 550 mm</td><td>800 × 800 × 600 mm</td><td>220 × 220 × 220 mm</td><td>280 × 280 × 350 mm</td></tr></tbody>
+          <tfoot><tr><td></td><td colspan="4"><span class="cost"><span>Lower</span><span class="label">Typical print cost</span><span>Higher</span></span></td></tr></tfoot>
+        </table></div>
+        <p class="hint">* Surfaces that touch support structures come out rougher, whatever the process. ** Depends on the material.</p>
+  </dialog>
+</main>
+<div class="temper" role="presentation"></div>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="label">Contact</p>
+      <h2>Got a part in mind?</h2>
+      <p>Send a sketch, a reference photo or a 3D file, then choose the material, the size and your deadline.</p>
+      <div class="cta"><a class="btn" href="quote.html">Start a print</a><a class="btn ghost" href="request.html">Start a project</a></div>
+    </div>
+    <div class="channels">
+      <div class="chan">
+        <div><span class="label">Email</span><br><a class="big" href="mailto:ogcode3d@gmail.com" id="email">ogcode3d@gmail.com</a></div>
+        <button class="btn" type="button" id="copy">Copy</button>
+      </div>
+      <div class="chan">
+        <div><span class="label">Instagram</span><br><a class="big" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">@o.gcode</a></div>
+        <a class="btn" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">Follow ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap mono">
+    <div class="fine-row"><span>© <span id="yr">2026</span> OGCODE. Design-forward additive manufacturing, Athens.</span><nav class="legal-links" aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="legal.html">Legal notice</a></nav></div>
+    <nav aria-label="Footer"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+<script src="quote.js"></script>
+</body>
+</html>

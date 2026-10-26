@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lattice Disks · FEA Study · OGCODE</title>
+<meta name="description" content="OGCODE is a design and additive manufacturing studio in Athens: fashion, objects and figures printed in polymers, resins and metals, plus training and software.">
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/oxanium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap" style="position:relative">
+    <a class="brand" href="index.html" aria-label="OGCODE home"><svg role="img" aria-label="OGCODE" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1007 182"><path fill-rule="evenodd" d="M0,39 L0,142 L39,181 L129,181 L168,142 L208,181 L297,181 L336,142 L376,181 L466,181 L505,142 L545,181 L635,181 L674,142 L675,181 L803,181 L842,142 L882,181 L972,181 L1006,147 L983,124 L958,149 L896,149 L876,129 L877,107 L959,107 L959,74 L877,74 L876,53 L896,33 L958,33 L983,57 L1006,34 L972,0 L882,0 L843,39 L803,0 L675,0 L674,39 L634,0 L545,0 L506,39 L466,0 L377,0 L337,40 L336,75 L250,75 L250,107 L304,108 L304,128 L283,149 L222,149 L201,128 L201,53 L221,33 L284,33 L309,57 L331,34 L297,0 L208,0 L169,39 L128,0 L39,0ZM708,33 L790,33 L810,53 L810,128 L789,149 L707,148ZM558,33 L621,33 L641,53 L641,129 L622,148 L559,149 L538,128 L538,53ZM370,53 L390,33 L453,33 L482,62 L505,39 L506,141 L482,119 L452,149 L390,149 L370,129ZM52,33 L115,33 L135,53 L135,129 L115,149 L53,149 L32,128 L32,54Z"/></svg><span class="chip3d" aria-hidden="true">3D</span></a>
+    <nav class="nav" aria-label="Main"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html" aria-current="page">Research</a><a href="shop.html">Cart</a><span class="sep"></span><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a><a href="request.html">Start a project</a><a href="quote.html" class="pill">Start a print</a></nav>
+    <details class="menu"><summary>Menu</summary><nav class="drop" aria-label="Main"><span class="label">Work</span><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html" aria-current="page">Research</a><a href="shop.html">Cart</a><span class="label">Services</span><a href="quote.html">Start a print</a><a href="request.html">Start a project</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav></details>
+  </div>
+</header>
+<main class="fea">
+  <section class="pagehead">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs label" aria-label="Breadcrumb"><a href="index.html">Work</a><span>/</span><span>Research</span></nav>
+        <h1>Lattice disks</h1>
+        <p>Design and computational evaluation of additively manufactured SS316L disks with internal lattice structures, using the finite element method.</p>
+      </div>
+      <div class="meta"><span class="label">SS316L · L-PBF · ANSYS 2023 R1</span><br><span class="label">Diploma thesis · NTUA · 2024</span></div>
+    </div>
+  </section>
+  <div class="temper" role="presentation"></div>
+
+  <section class="block fea-intro" style="padding-top:clamp(32px,5vw,56px)">
+    <div class="wrap">
+      <div class="fea-hero">
+        <figure><div class="ocut"><img src="photos/fea/lattice-disk.jpg" alt="Quarter disk segment with internal lattice between two 1 mm plates, modelled in Fusion 360"></div><figcaption class="label" style="margin-top:10px">Disk segment · two 1 mm plates with an internal lattice</figcaption></figure>
+        <div class="fea-lede">
+          <span class="label">The question</span>
+          <p class="big">How does the shape of the internal lattice change the way a 3D printed steel disk carries load?</p>
+          <p class="muted">Five lattice disks, built from three unit cells at different densities, were modelled in Fusion 360, meshed and solved in ANSYS under the same compression, then compared on deformation, strain, stress, strain energy and reaction force.</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat o"><b>5</b><span class="label">Lattice variants</span></div><div class="stat o"><b>3</b><span class="label">Unit cells</span></div><div class="stat o"><b>0.5 mm</b><span class="label">Imposed compression</span></div><div class="stat o"><b>14×</b><span class="label">Stiffness range</span></div><div class="stat o"><b>247 kN</b><span class="label">Highest reaction force</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2><span class="oct-dot"></span>Why lattices</h2><span class="label">Scope</span></div>
+      <div class="fixes"><div class="fix"><h3>Weight reduction</h3><p>Material only where the load path needs it.</p></div><div class="fix"><h3>Tunable properties</h3><p>Stiffness and strength set by geometry, fully parameterised.</p></div><div class="fix"><h3>Decentralised production</h3><p>Parts made on demand, close to where they are used.</p></div><div class="fix"><h3>Rapid prototyping</h3><p>From model to tested part without tooling.</p></div><div class="fix"><h3>Lower cost and lead time</h3><p>No moulds, fewer steps, faster iterations.</p></div><div class="fix"><h3>Lower environmental impact</h3><p>Less material, less waste, more efficient parts.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2><span class="oct-dot"></span>Three unit cells</h2><span class="label">At different densities</span></div>
+      <div class="cells">
+        <article class="cellcard fam-bcc">
+          <div class="cellimgs"><figure class="ocut"><img src="photos/fea/cell-bcc-12.jpg" alt="Body-centred cubic unit cell, 12% density" loading="lazy"><figcaption class="label">12%</figcaption></figure><figure class="ocut"><img src="photos/fea/cell-bcc-50.jpg" alt="Body-centred cubic unit cell, 50% density" loading="lazy"><figcaption class="label">50%</figcaption></figure></div>
+          <div class="cellbody"><span class="label"><i class="sw"></i>BCC · 12% and 50%</span><h3>Body-centred cubic</h3>
+            <ul><li>Uniform struts, equal in every direction</li><li>Nodes keep a fixed orientation relative to each other</li><li>Nodes treated as rigid; node centres follow an affine displacement field</li></ul></div>
+        </article>
+        <article class="cellcard fam-i">
+          <div class="cellimgs"><figure class="ocut"><img src="photos/fea/cell-i-12.jpg" alt="I-type unit cell, 12% density" loading="lazy"><figcaption class="label">12%</figcaption></figure><figure class="ocut"><img src="photos/fea/cell-i-30.jpg" alt="I-type unit cell, 30% density" loading="lazy"><figcaption class="label">30%</figcaption></figure></div>
+          <div class="cellbody"><span class="label"><i class="sw"></i>I-type · 12% and 30%</span><h3>I-type</h3>
+            <ul><li>Structural integrity without nodes</li><li>Lower squeal propensity in the 4–8 kHz range</li><li>Simple to design and to manufacture</li></ul></div>
+        </article>
+        <article class="cellcard fam-t">
+          <div class="cellimgs"><figure class="ocut"><img src="photos/fea/cell-t-50.jpg" alt="Tetrahedral unit cell, 50% density" loading="lazy"><figcaption class="label">50%</figcaption></figure></div>
+          <div class="cellbody"><span class="label"><i class="sw"></i>Tetra · 50%</span><h3>Tetrahedral</h3>
+            <ul><li>Lightweight, with a high strength-to-weight ratio</li><li>Shear response stays linear up to failure</li><li>Fails suddenly once shear stress reaches a critical threshold</li></ul></div>
+        </article></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2><span class="oct-dot"></span>Method</h2><span class="label">Model · mesh · load · material</span></div>
+      <ol class="pipe">
+        <li><div class="ptext"><b>Lattice generation</b><span class="label">Fusion 360</span><p>Each unit cell is patterned across a 90° disk segment and joined to a 1 mm plate above and below.</p></div>
+          <figure class="ocut"><img src="photos/fea/lattice-array.jpg" alt="Lattice of BCC unit cells patterned on the bottom plate" loading="lazy"></figure></li>
+        <li><div class="ptext"><b>Mesh</b><span class="label">ANSYS</span>
+            <p>Plates meshed with 40 angular and 3 axial divisions across the 1 mm thickness. Struts, nodes and fillets get their own face sizing, refined until the maximum deformation changes by less than 0.1% between steps.</p></div>
+          <figure class="ocut"><img src="photos/fea/mesh.jpg" alt="ANSYS mesh close-up of the BCC struts between the plates" loading="lazy"></figure></li>
+        <li><div class="ptext"><b>Boundary conditions</b><span class="label">After Barros et al., 2020</span>
+            <ul class="bc"><li>Radial sides of the segment fixed in x and y</li><li>Bottom face of the bottom plate fixed</li><li>Top face of the top plate displaced gradually by 0.5 mm</li></ul></div>
+          <figure class="ocut"><img src="photos/fea/def-i-12.jpg" alt="Side view of an I-type 12% lattice between the plates" loading="lazy"></figure></li>
+        <li><div class="ptext"><b>Material</b><span class="label">Stainless steel 316L · L-PBF</span>
+            <ul class="bc"><li>Proven in laser powder bed fusion</li><li>Corrosion resistant, for harsh environments</li><li>Biocompatible, used for implants and surgical tools</li><li>Strong, ductile and weldable, with few defects in complex shapes</li></ul></div>
+          <figure class="ocut matcard"><div><b>SS316L</b><span class="label">Fe · Cr 16–18% · Ni 10–14% · Mo 2–3%</span></div></figure></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0" id="results">
+    <div class="wrap">
+      <div class="sec-head"><h2><span class="oct-dot"></span>Results</h2><span class="label">Same 0.5 mm compression for every disk</span></div>
+      <div class="viz o" id="viz">
+        <div class="viz-top">
+          <div class="seg" role="tablist" aria-label="Metric" id="metricTabs"></div>
+          <div class="seg small" role="tablist" aria-label="View"><button type="button" role="tab" aria-selected="true" data-view="chart">Chart</button><button type="button" role="tab" aria-selected="false" data-view="table">Table</button></div>
+        </div>
+        <div class="viz-head"><h3 id="vizTitle"></h3><p class="muted" id="vizNote"></p></div>
+        <div class="legend" aria-hidden="true"><span><i class="sw fam-bcc"></i>BCC</span><span><i class="sw fam-i"></i>I-type</span><span><i class="sw fam-t"></i>Tetrahedral</span></div>
+        <div class="chart" id="chart" role="img"></div>
+        <div class="tablewrap" id="tableView" hidden></div>
+        <div class="tip" id="tip" hidden></div>
+      </div>
+      <p class="hint" style="margin-top:12px">Peak values are local maxima of the simulation.</p>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0" id="maps">
+    <div class="wrap">
+      <div class="sec-head"><h2><span class="oct-dot"></span>Contour maps</h2><span class="label">ANSYS · static structural</span></div>
+      <div class="maps-ctrl">
+        <div class="seg" role="tablist" aria-label="Result" id="mapMetric"></div>
+        <div class="seg" role="tablist" aria-label="Unit cell" id="mapCell"></div>
+      </div>
+      <div class="maps" id="mapsView"></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2><span class="oct-dot"></span>What the numbers say</h2><span class="label">Findings</span></div>
+      <ol class="findings">
+        <li><div><b>Density drives stiffness.</b> Going from 12% to 50% density multiplies the BCC disk&#x27;s reaction force by 11, from 17.4 to 191.6 kN. The I-type disk doubles from 12% to 30%, from 37.0 to 77.4 kN.</div></li>
+        <li><div><b>The tetrahedral cell is the stiffest.</b> At 50% it carries the highest reaction force, 246.7 kN, and stores the most strain energy, 100.4 J, about 14 times the force of the BCC 12% disk.</div></li>
+        <li><div><b>BCC spreads the load most evenly.</b> BCC 12% has the lowest peak von Mises stress, 1,054 MPa, and the lowest average, 307 MPa.</div></li>
+        <li><div><b>The I-type concentrates stress.</b> It reaches the highest peak stress, 2,118 MPa at 12% density, even though its average stays close to the others.</div></li>
+        <li><div><b>Same compression, different effort.</b> All five disks deform 0.50–0.52 mm at most, because the load is a fixed displacement. The differences show in the force needed, the stress and the stored energy.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap about">
+      <div>
+        <p class="label">Next steps</p>
+        <ul class="tags" style="margin-top:12px"><li>Lattice structures in conventionally manufactured materials</li><li>Relationship between lattice density and mechanical properties</li><li>Cartesian versus cylindrical lattices</li><li>Fully parameterised mechanical properties</li><li>Further lattice patterns</li><li>Torsional and shear loading</li><li>Larger displacement scenarios</li><li>Physical compression tests</li><li>Fatigue testing of lattice clutch disks for long-term durability</li></ul>
+      </div>
+      <div class="credits">
+        <p class="label">Credits</p>
+        <dl class="faq">
+          <dt>Author</dt><dd>Sotirios Vlogiannitis, Mechanical Engineer MEng, NTUA · founder of OGCODE</dd>
+          <dt>Supervision</dt><dd>Prof. Vasileios Spitas and Dr Nikolaos Rogkas</dd>
+          <dt>Institution</dt><dd>National Technical University of Athens, School of Mechanical Engineering, Section of Mechanical Design and Control Systems, 2024</dd>
+          <dt>Tools</dt><dd>Autodesk Fusion 360 for the lattice models, ANSYS 2023 R1 static structural for the analysis</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block fea-cta">
+    <div class="wrap">
+      <div><span class="label">Work with us</span><h2>Need a lighter part, a lattice or an FEA check?</h2><p class="muted">We design lattice structures, simulate them and produce them in polymer or metal. Or learn how to do it yourself.</p></div>
+      <div class="cta"><a class="btn" href="request.html">Start a project</a><a class="btn ghost" href="training.html">Training</a></div>
+    </div>
+  </section>
+
+  <dialog class="dlg lightbox" id="lightbox"><form method="dialog"><button class="lb-close" aria-label="Close">✕</button></form><img alt=""><p class="label lb-cap"></p></dialog>
+  <script type="application/json" id="fea-data">{"models": [{"id": "bcc-12", "fam": "bcc", "name": "BCC", "dens": 12, "deform": [0.515, 0.254], "strain": [0.005, 0.002], "stress": [1054.4, 306.7], "energy": [0.4, 6940], "force": 17362}, {"id": "bcc-50", "fam": "bcc", "name": "BCC", "dens": 50, "deform": [0.511, 0.262], "strain": [0.007, 0.003], "stress": [1374.2, 495.2], "energy": [10.23, 82484], "force": 191610}, {"id": "i-12", "fam": "i", "name": "I-type", "dens": 12, "deform": [0.508, 0.253], "strain": [0.011, 0.003], "stress": [2118.3, 491.1], "energy": [0.81, 15654], "force": 37034}, {"id": "i-30", "fam": "i", "name": "I-type", "dens": 30, "deform": [0.508, 0.25], "strain": [0.01, 0.002], "stress": [1834.8, 358.6], "energy": [1.05, 28698], "force": 77375}, {"id": "t-50", "fam": "t", "name": "Tetrahedral", "dens": 50, "deform": [0.503, 0.249], "strain": [0.007, 0.003], "stress": [1359.9, 543.3], "energy": [8.13, 100420], "force": 246690}]}</script>
+</main>
+<div class="temper" role="presentation"></div>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="label">Contact</p>
+      <h2>Got a part in mind?</h2>
+      <p>Send a sketch, a reference photo or a 3D file, then choose the material, the size and your deadline.</p>
+      <div class="cta"><a class="btn" href="quote.html">Start a print</a><a class="btn ghost" href="request.html">Start a project</a></div>
+    </div>
+    <div class="channels">
+      <div class="chan">
+        <div><span class="label">Email</span><br><a class="big" href="mailto:ogcode3d@gmail.com" id="email">ogcode3d@gmail.com</a></div>
+        <button class="btn" type="button" id="copy">Copy</button>
+      </div>
+      <div class="chan">
+        <div><span class="label">Instagram</span><br><a class="big" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">@o.gcode</a></div>
+        <a class="btn" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">Follow ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap mono">
+    <div class="fine-row"><span>© <span id="yr">2026</span> OGCODE. Design-forward additive manufacturing, Athens.</span><nav class="legal-links" aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="legal.html">Legal notice</a></nav></div>
+    <nav aria-label="Footer"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+<script src="fea.js"></script>
+</body>
+</html>
