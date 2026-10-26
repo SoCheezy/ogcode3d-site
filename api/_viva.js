@@ -75,7 +75,8 @@ async function webhookKey() {
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.Key) throw new Error('Could not get the webhook key (' + r.status + '). Merchant ID length ' + id.length +
-    ', API key length ' + key.length + ', raw lengths ' + String(process.env.VIVA_MERCHANT_ID).length + '/' + String(process.env.VIVA_API_KEY).length + '.');
+    ', API key length ' + key.length + ', raw lengths ' + String(process.env.VIVA_MERCHANT_ID).length + '/' + String(process.env.VIVA_API_KEY).length +
+    ', invisible or non-keyboard characters in the key: ' + (key.match(/[^\x21-\x7e]/g) || []).length + '.');
   return j.Key;
 }
 
