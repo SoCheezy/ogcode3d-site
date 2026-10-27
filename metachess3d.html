@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generate your 3D chess model · Metachess3D · OGCODE</title>
+<meta name="description" content="Turn any chess game into a 3D model. Paste or upload a PGN, preview the sculpture in your browser, get a live price in resin, nylon or metal, and order it.">
+<link rel="canonical" href="https://www.ogcode3d.com/metachess3d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OGCODE">
+<meta property="og:title" content="Generate your 3D chess model · Metachess3D">
+<meta property="og:description" content="Turn any chess game into a 3D model. Paste or upload a PGN, preview the sculpture in your browser, get a live price in resin, nylon or metal, and order it.">
+<meta property="og:url" content="https://www.ogcode3d.com/metachess3d.html">
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/oxanium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ---- Generator (scoped to #mc3d so it never touches the rest of the site) ---- */
+#mc3d{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);border-block:1px solid var(--line);background:var(--bg)}
+#mc3d #left{padding:28px 26px 36px;border-right:1px solid var(--line);min-width:0}
+#mc3d label{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin:22px 0 8px}
+#mc3d #left>label:first-of-type,#mc3d #left>#apiBaseGroup+label{margin-top:0}
+#mc3d textarea{height:150px;min-height:0;resize:vertical;font-family:var(--f-mono);font-size:.78rem;line-height:1.5}
+#mc3d input[type=file]{font:400 .85rem var(--f-body);color:var(--muted);width:100%;padding:8px 0}
+#mc3d input[type=file]::file-selector-button{background:var(--ink);color:var(--bg);border:0;padding:8px 14px;font:600 .8rem var(--f-body);margin-right:12px;cursor:pointer;
+  clip-path:polygon(6px 0,calc(100% - 6px) 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px)}
+#mc3d input[type=file]::file-selector-button:hover{background:var(--accent)}
+#mc3d .hint{font-size:.82rem;color:var(--muted);margin-top:8px;line-height:1.5}
+#mc3d #left .btn{width:100%;margin-top:22px}
+#mc3d .btn:disabled:hover{--ol:var(--ink);--of:var(--ink);color:var(--bg)}
+#mc3d .btn.ghost:disabled:hover{--of:transparent;color:var(--ink)}
+#mc3d #status{font:400 .78rem/1.45 var(--f-mono);color:var(--muted);margin-top:14px;min-height:18px;white-space:pre-wrap}
+#mc3d #status.error{color:var(--err)}
+#mc3d #status.ok{color:var(--ok)}
+#mc3d .stat{--cut:10px;--ol:var(--line);--of:transparent;padding:13px 16px;margin-top:10px;
+  clip-path:polygon(var(--cut) 0,calc(100% - var(--cut)) 0,100% var(--cut),100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,var(--cut) 100%,0 calc(100% - var(--cut)),0 var(--cut));box-shadow:inset 0 0 0 1px var(--ol)}
+#mc3d .stat .label{margin:0;font-size:.68rem}
+#mc3d .stat .value{font:700 1.2rem/1.2 var(--f-display);margin-top:3px;color:var(--ink)}
+#mc3d .stat.total{--ol:var(--accent)}
+#mc3d .stat.total .value{font-size:1.7rem}
+#mc3d #statsBox{display:none}
+#mc3d #apiBaseGroup{display:none}
+#mc3d #right{position:relative;min-height:560px;min-width:0;background:radial-gradient(ellipse at 50% 40%,#7b8085 0%,#4a4f54 78%)}
+#mc3d #canvasHost{position:absolute;inset:0;touch-action:none;cursor:grab}
+#mc3d #canvasHost:active{cursor:grabbing}
+#mc3d #rightEmpty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#E3E4E0;text-align:center;padding:20px;gap:10px;pointer-events:none}
+#mc3d #rightEmpty .icon{font-size:34px;opacity:.5}
+#mc3d #rightEmpty div:last-child{font:400 .74rem/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase}
+#mc3d #viewerToolbar{position:absolute;top:14px;right:14px;display:flex;gap:4px;background:var(--ink);padding:5px;opacity:0;pointer-events:none;transition:opacity .15s ease;
+  clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px)}
+#mc3d #viewerToolbar.visible{opacity:1;pointer-events:auto}
+#mc3d .vbtn{width:32px;height:32px;margin:0;padding:0;border:0;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--bg);font-size:15px;line-height:1;cursor:pointer}
+#mc3d .vbtn:hover,#mc3d .vbtn.active{background:var(--accent);color:var(--bg)}
+#mc3d #viewerHint{position:absolute;bottom:14px;left:18px;font:400 .66rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:#E3E4E0;opacity:0;transition:opacity .15s ease;pointer-events:none}
+#mc3d #viewerHint.visible{opacity:1}
+@media (max-width:800px){#mc3d{grid-template-columns:minmax(0,1fr)}#mc3d #left{border-right:0;border-bottom:1px solid var(--line)}#mc3d #right{min-height:60vh}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap" style="position:relative">
+    <a class="brand" href="index.html" aria-label="OGCODE home"><svg role="img" aria-label="OGCODE" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1007 182"><path fill-rule="evenodd" d="M0,39 L0,142 L39,181 L129,181 L168,142 L208,181 L297,181 L336,142 L376,181 L466,181 L505,142 L545,181 L635,181 L674,142 L675,181 L803,181 L842,142 L882,181 L972,181 L1006,147 L983,124 L958,149 L896,149 L876,129 L877,107 L959,107 L959,74 L877,74 L876,53 L896,33 L958,33 L983,57 L1006,34 L972,0 L882,0 L843,39 L803,0 L675,0 L674,39 L634,0 L545,0 L506,39 L466,0 L377,0 L337,40 L336,75 L250,75 L250,107 L304,108 L304,128 L283,149 L222,149 L201,128 L201,53 L221,33 L284,33 L309,57 L331,34 L297,0 L208,0 L169,39 L128,0 L39,0ZM708,33 L790,33 L810,53 L810,128 L789,149 L707,148ZM558,33 L621,33 L641,53 L641,129 L622,148 L559,149 L538,128 L538,53ZM370,53 L390,33 L453,33 L482,62 L505,39 L506,141 L482,119 L452,149 L390,149 L370,129ZM52,33 L115,33 L135,53 L135,129 L115,149 L53,149 L32,128 L32,54Z"/></svg><span class="chip3d" aria-hidden="true">3D</span></a>
+    <nav class="nav" aria-label="Main"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html" aria-current="page">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><span class="sep"></span><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a><a href="request.html">Start a project</a><a href="quote.html" class="pill">Start a print</a></nav>
+    <details class="menu"><summary>Menu</summary><nav class="drop" aria-label="Main"><span class="label">Work</span><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html" aria-current="page">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><span class="label">Services</span><a href="quote.html">Start a print</a><a href="request.html">Start a project</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav></details>
+  </div>
+</header>
+<main>
+  <section class="pagehead">
+    <div class="wrap">
+      <div>
+        <nav class="crumbs label" aria-label="Breadcrumb"><a href="index.html">Work</a><span>/</span><a href="metachess.html">Metachess</a><span>/</span><span>Generator</span></nav>
+        <h1>Metachess3D</h1>
+        <p>From notation to memory. Upload a game as PGN, watch every move rise from the board, then price it and order your one-off piece.</p>
+        <div class="cta"><a class="btn ghost" href="metachess.html">← Back to Metachess</a><a class="btn ghost" href="request.html">No PGN? Send us the game</a></div>
+      </div>
+      <div class="meta"><span class="label">Resin · Nylon · Metal</span><br><span class="label">Made to order · Athens</span></div>
+    </div>
+  </section>
+  <div class="temper" role="presentation"></div>
+  <section id="mc3d" aria-label="Metachess3D generator">
+<div id="left">
+    <div id="apiBaseGroup">
+      <label for="apiBase">Backend API URL</label>
+      <input type="text" id="apiBase" placeholder="https://chess3d-backend-z1zy.onrender.com" value="https://chess3d-backend-z1zy.onrender.com">
+    </div>
+
+    <label for="pgnFile">Upload PGN file</label>
+    <input type="file" id="pgnFile" accept=".pgn,.txt">
+
+    <label for="pgnText">...or paste PGN text</label>
+    <textarea id="pgnText" placeholder="[Event &quot;Example&quot;]&#10;1. e4 e5 2. Nf3 Nc6 ..."></textarea>
+
+    <label for="colorMaterial">Color / material</label>
+    <div class="select"><select id="colorMaterial">
+      <option value="#FDFBF9" data-material="Standard PLA" data-price="1.26">Standard Resin - White</option>
+      <option value="#28282B" data-material="Standard PLA (Natural)" data-price="1.26">Standard Resin - Black</option>
+      <option value="#FFFFFF" data-material="Standard PLA (White)" data-price="3.00">Nylon - White</option>
+      <option value="#252324" data-material="Standard PLA (Black)" data-price="3.00">Nylon - Black</option>
+      <option value="#848789" data-material="Wood-fill PLA" data-price="3.00">Aluminium Alloy</option>
+      <option value="#CFD4D9" data-material="Marble-fill PLA" data-price="6.00">Stainless Steel 316L</option>
+      <option value="#B8860B" data-material="Bronze/Gold-fill (metal look)" data-price="300">Gold</option>
+      <option value="#c0c0c0" data-material="Steel/Silver-fill (metal look)" data-price="30">Silver</option>
+    </select></div>
+    <div class="hint">The color only tints the 3D preview, but the material you pick here does feed the price estimate below.</div>
+
+    <button id="genBtn" class="btn" type="button">Generate 3D Model</button>
+    <div id="status"></div>
+    <div id="statsBox"></div>
+
+    <button id="priceBtn" class="btn ghost" type="button" disabled>Estimate Print Price</button>
+    <div id="priceBox"></div>
+
+    <div id="orderFields" style="display:none;">
+      <label for="custName">Your name</label>
+      <input type="text" id="custName" placeholder="Jane Doe">
+
+      <label for="custEmail">Your email</label>
+      <input type="text" id="custEmail" placeholder="jane@example.com">
+
+      <label for="custShipping">Shipping address / notes</label>
+      <textarea id="custShipping" style="height:80px;" placeholder="Where should we ship it? Any special requests?"></textarea>
+
+      <button id="orderBtn" class="btn" type="button">Order This Model</button>
+      <div id="orderStatus" class="hint"></div>
+    </div>
+  </div>
+  <div id="right">
+    <div id="canvasHost"></div>
+    <div id="rightEmpty"><div class="icon">♟</div><div>Your generated chess model will appear here</div></div>
+    <div id="viewerToolbar">
+      <button class="vbtn" type="button" id="btnZoomIn" title="Zoom in">+</button>
+      <button class="vbtn" type="button" id="btnZoomOut" title="Zoom out">–</button>
+      <button class="vbtn" type="button" id="btnReset" title="Reset view">⤾</button>
+      <button class="vbtn" type="button" id="btnRotate" title="Toggle auto-rotate">⟳</button>
+      <button class="vbtn" type="button" id="btnGrid" title="Toggle ground grid">▦</button>
+    </div>
+    <div id="viewerHint">Drag to rotate · Scroll to zoom</div>
+  </div>
+  </section>
+</main>
+<div class="temper" role="presentation"></div>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="label">Contact</p>
+      <h2>Got a part in mind?</h2>
+      <p>Send a sketch, a reference photo or a 3D file, then choose the material, the size and your deadline.</p>
+      <div class="cta"><a class="btn" href="quote.html">Start a print</a><a class="btn ghost" href="request.html">Start a project</a></div>
+    </div>
+    <div class="channels">
+      <div class="chan">
+        <div><span class="label">Email</span><br><a class="big" href="mailto:ogcode3d@gmail.com" id="email">ogcode3d@gmail.com</a></div>
+        <button class="btn" type="button" id="copy">Copy</button>
+      </div>
+      <div class="chan">
+        <div><span class="label">Instagram</span><br><a class="big" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">@o.gcode</a></div>
+        <a class="btn" href="https://www.instagram.com/o.gcode/" target="_blank" rel="noopener">Follow ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap mono">
+    <div class="fine-row"><span>© <span id="yr">2026</span> OGCODE. Design-forward additive manufacturing, Athens.</span><nav class="legal-links" aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="legal.html">Legal notice</a></nav></div>
+    <nav aria-label="Footer"><a href="fashion.html">Fashion</a><a href="parts.html">Objects</a><a href="metachess.html">Metachess</a><a href="chess.html">Chess sets</a><a href="zero-bricks.html">Zero Bricks</a><a href="lattice-disks.html">Research</a><a href="shop.html">Cart</a><a href="training.html">Training</a><a href="web.html">Software</a><a href="about.html">About</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+<script>
+(function(){
+  const apiBaseEl = document.getElementById('apiBase');
+  const pgnFileEl = document.getElementById('pgnFile');
+  const pgnTextEl = document.getElementById('pgnText');
+  const colorMaterialEl = document.getElementById('colorMaterial');
+  const genBtn = document.getElementById('genBtn');
+  const statusEl = document.getElementById('status');
+  const statsBox = document.getElementById('statsBox');
+  const priceBtn = document.getElementById('priceBtn');
+  const priceBox = document.getElementById('priceBox');
+  const orderFields = document.getElementById('orderFields');
+  const orderBtn = document.getElementById('orderBtn');
+  const orderStatus = document.getElementById('orderStatus');
+  const custNameEl = document.getElementById('custName');
+  const custEmailEl = document.getElementById('custEmail');
+  const custShippingEl = document.getElementById('custShipping');
+  const canvasHost = document.getElementById('canvasHost');
+  const rightEmpty = document.getElementById('rightEmpty');
+  const viewerToolbar = document.getElementById('viewerToolbar');
+  const viewerHint = document.getElementById('viewerHint');
+  const btnZoomIn = document.getElementById('btnZoomIn');
+  const btnZoomOut = document.getElementById('btnZoomOut');
+  const btnReset = document.getElementById('btnReset');
+  const btnRotate = document.getElementById('btnRotate');
+  const btnGrid = document.getElementById('btnGrid');
+
+  function setStatus(msg, kind){
+    statusEl.textContent = msg || '';
+    statusEl.className = kind || '';
+  }
+
+  pgnFileEl.addEventListener('change', () => {
+    const f = pgnFileEl.files[0];
+    if (!f) return;
+    f.text().then(t => pgnTextEl.value = t);
+  });
+
+  // ---- three.js viewer ----
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 10000);
+  const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  canvasHost.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dir1 = new THREE.DirectionalLight(0xffffff,0.9); dir1.position.set(1,2,3); scene.add(dir1);
+  const dir2 = new THREE.DirectionalLight(0xffffff,0.4); dir2.position.set(-2,-1,-2); scene.add(dir2);
+  const modelGroup = new THREE.Group(); scene.add(modelGroup);
+
+  const grid = new THREE.GridHelper(10, 10, 0x3a4250, 0x232933);
+  grid.visible = false;
+  scene.add(grid);
+
+  let camDist = 5;
+  let currentMesh = null;
+  let lastStats = null;
+  const PRINT_SCALE = 10; // the previewed model is 1:10 of the real printed piece
+  const SETUP_FEE = 15; // flat setup/finishing fee per print, in USD
+  let autoRotate = false;
+  let hasModel = false;
+  let defaultCamDist = 5;
+  const defaultRotation = new THREE.Euler(-0.5, 0.6, 0);
+
+  function resize(){
+    const w = canvasHost.clientWidth, h = canvasHost.clientHeight;
+    if(!w||!h) return;
+    renderer.setSize(w,h); camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+  new ResizeObserver(resize).observe(canvasHost);
+  (function animate(){
+    requestAnimationFrame(animate);
+    if (autoRotate) modelGroup.rotation.y += 0.006;
+    camera.position.set(0,0,camDist);
+    camera.lookAt(0,0,0);
+    renderer.render(scene,camera);
+  })();
+  resize();
+
+  let dragging=false,lastX=0,lastY=0;
+  canvasHost.addEventListener('pointerdown', e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;});
+  window.addEventListener('pointerup', ()=>dragging=false);
+  window.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const dx=e.clientX-lastX, dy=e.clientY-lastY; lastX=e.clientX; lastY=e.clientY;
+    modelGroup.rotation.y += dx*0.008; modelGroup.rotation.x += dy*0.008;
+  });
+  canvasHost.addEventListener('wheel', e=>{
+    e.preventDefault(); camDist *= (1+e.deltaY*0.001); camDist = Math.max(0.5, Math.min(200, camDist));
+  }, {passive:false});
+
+  // ---- viewer toolbar controls ----
+  function setToolbarEnabled(enabled){
+    hasModel = enabled;
+    viewerToolbar.classList.toggle('visible', enabled);
+    viewerHint.classList.toggle('visible', enabled);
+    [btnZoomIn, btnZoomOut, btnReset, btnRotate, btnGrid].forEach(b => b.disabled = !enabled);
+  }
+  setToolbarEnabled(false);
+
+  btnZoomIn.addEventListener('click', () => { camDist = Math.max(0.5, camDist * 0.8); });
+  btnZoomOut.addEventListener('click', () => { camDist = Math.min(200, camDist * 1.25); });
+  btnReset.addEventListener('click', () => {
+    camDist = defaultCamDist;
+    modelGroup.rotation.copy(defaultRotation);
+  });
+  btnRotate.addEventListener('click', () => {
+    autoRotate = !autoRotate;
+    btnRotate.classList.toggle('active', autoRotate);
+  });
+  btnGrid.addEventListener('click', () => {
+    grid.visible = !grid.visible;
+    btnGrid.classList.toggle('active', grid.visible);
+  });
+
+  // Re-tint the currently loaded model live when the color dropdown changes
+  // (preview only — never sent to the backend, never affects the STL file).
+  colorMaterialEl.addEventListener('change', () => {
+    if (currentMesh) {
+      currentMesh.material.color.set(colorMaterialEl.value);
+    }
+    // If a price estimate is already showing, refresh it for the newly picked material.
+    if (lastStats && priceBox.innerHTML.trim()) {
+      renderPrice();
+    }
+  });
+
+  // ---- STL parsing + stats (binary & ASCII) ----
+  function parseSTL(buffer){
+    const dv = new DataView(buffer);
+    let isBinary = true;
+    if (buffer.byteLength < 84) isBinary = false;
+    else {
+      const triCount = dv.getUint32(80, true);
+      if (84 + triCount*50 !== buffer.byteLength) isBinary = false;
+    }
+    if (!isBinary){
+      const text = new TextDecoder().decode(buffer);
+      const verts = [];
+      const re = /vertex\s+([-\d.eE+]+)\s+([-\d.eE+]+)\s+([-\d.eE+]+)/g;
+      let m;
+      while((m = re.exec(text)) !== null) verts.push(parseFloat(m[1]),parseFloat(m[2]),parseFloat(m[3]));
+      return new Float32Array(verts);
+    }
+    const triCount = dv.getUint32(80, true);
+    const positions = new Float32Array(triCount*9);
+    let offset = 84;
+    for(let i=0;i<triCount;i++){
+      offset += 12;
+      for(let v=0; v<3; v++){
+        positions[i*9+v*3]=dv.getFloat32(offset,true); offset+=4;
+        positions[i*9+v*3+1]=dv.getFloat32(offset,true); offset+=4;
+        positions[i*9+v*3+2]=dv.getFloat32(offset,true); offset+=4;
+      }
+      offset += 2;
+    }
+    return positions;
+  }
+
+  function computeStats(positions){
+    const triCount = positions.length/9;
+    let volume=0, area=0;
+    const min=[Infinity,Infinity,Infinity], max=[-Infinity,-Infinity,-Infinity];
+    const v0=new THREE.Vector3(), v1=new THREE.Vector3(), v2=new THREE.Vector3(), e1=new THREE.Vector3(), e2=new THREE.Vector3(), cr=new THREE.Vector3();
+    for(let i=0;i<triCount;i++){
+      const o=i*9;
+      v0.set(positions[o],positions[o+1],positions[o+2]);
+      v1.set(positions[o+3],positions[o+4],positions[o+5]);
+      v2.set(positions[o+6],positions[o+7],positions[o+8]);
+      for(const p of [v0,v1,v2]){
+        if(p.x<min[0])min[0]=p.x; if(p.y<min[1])min[1]=p.y; if(p.z<min[2])min[2]=p.z;
+        if(p.x>max[0])max[0]=p.x; if(p.y>max[1])max[1]=p.y; if(p.z>max[2])max[2]=p.z;
+      }
+      volume += v0.dot(v1.clone().cross(v2))/6;
+      e1.subVectors(v1,v0); e2.subVectors(v2,v0); cr.crossVectors(e1,e2);
+      area += cr.length()*0.5;
+    }
+    return {triCount, volume:Math.abs(volume), area, dims:[max[0]-min[0],max[1]-min[1],max[2]-min[2]]};
+  }
+
+  function fmt(n,d=2){ return isFinite(n) ? n.toLocaleString(undefined,{maximumFractionDigits:d}) : '—'; }
+
+  // ---- print price estimate ----
+  // The previewed model is at 1:10 scale of the piece as it'll actually be
+  // printed, so linear dimensions scale x10, surface area x10² = x100, and
+  // volume x10³ = x1000 relative to the preview.
+  function computePrice(){
+    if (!lastStats) return null;
+    const opt = colorMaterialEl.selectedOptions[0];
+    const pricePerCm3 = parseFloat(opt.dataset.price) || 0;
+    const materialName = opt.dataset.material || opt.textContent;
+
+    const realVolumeCm3 = (lastStats.volume/1000) * Math.pow(PRINT_SCALE,3);
+    const realAreaCm2 = (lastStats.area/100) * Math.pow(PRINT_SCALE,2);
+    const realDimsMm = lastStats.dims.map(d => d*PRINT_SCALE);
+
+    const materialCost = realVolumeCm3 * pricePerCm3;
+    const total = materialCost + SETUP_FEE;
+
+    return {materialName, pricePerCm3, realVolumeCm3, realAreaCm2, realDimsMm, materialCost, setupFee: SETUP_FEE, total};
+  }
+
+  function renderPrice(){
+    const p = computePrice();
+    if (!p) return;
+    priceBox.innerHTML = `
+      <div class="stat"><div class="label">Material</div><div class="value">${p.materialName}</div></div>
+      <div class="stat"><div class="label">Print Size</div><div class="value">${fmt(p.realDimsMm[0])} × ${fmt(p.realDimsMm[1])} × ${fmt(p.realDimsMm[2])} mm</div></div>
+      <div class="stat total"><div class="label">Estimated Total</div><div class="value">$${fmt(p.total,2)}</div></div>
+      <div class="hint" style="grid-column:1/-1">Rough estimate only. Actual print shop pricing may vary.</div>
+    `;
+    orderFields.style.display = 'block';
+  }
+
+  priceBtn.addEventListener('click', renderPrice);
+
+  // ---- order email ----
+  // mailto: links have a practical length cap in some mail clients (Outlook
+  // in particular, around ~2000 characters for the whole URL), so a long
+  // PGN can silently fail to open. We truncate the PGN in that case and ask
+  // the customer to paste the rest in themselves rather than lose the order.
+  const ORDER_EMAIL = 'metachess3d@gmail.com';
+  const MAILTO_SAFE_LEN = 1800;
+
+  function buildOrderBody(p, pgn, contact){
+    return `New Metachess3D order request
+
+Name: ${contact.name || '(not provided)'}
+Email: ${contact.email || '(not provided)'}
+Shipping address / notes: ${contact.shipping || '(not provided)'}
+
+Material: ${p.materialName}
+Estimated print size: ${fmt(p.realDimsMm[0])} × ${fmt(p.realDimsMm[1])} × ${fmt(p.realDimsMm[2])} mm
+Estimated total: $${fmt(p.total,2)}
+
+PGN:
+${pgn}
+`;
+  }
+
+  function buildOrderMailto(){
+    const p = computePrice();
+    if (!p) return null;
+    const pgn = pgnTextEl.value.trim();
+    const contact = {
+      name: custNameEl.value.trim(),
+      email: custEmailEl.value.trim(),
+      shipping: custShippingEl.value.trim(),
+    };
+    const subject = `Metachess3D order request — ${p.materialName}`;
+
+    let body = buildOrderBody(p, pgn, contact);
+    let mailto = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    if (mailto.length > MAILTO_SAFE_LEN) {
+      const truncatedPgn = pgn.slice(0, 400) + '\n\n… PGN truncated to keep this email link working — please paste your full PGN here before sending.';
+      body = buildOrderBody(p, truncatedPgn, contact);
+      mailto = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+    return mailto;
+  }
+
+  orderBtn.addEventListener('click', () => {
+    const mailto = buildOrderMailto();
+    if (!mailto) return;
+    window.location.href = mailto;
+    orderStatus.textContent = 'Check your email client and hit send — we\'ll reply within 2 business days with a render for your approval.';
+  });
+
+  function loadPositions(positions){
+    modelGroup.clear();
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+    geo.computeVertexNormals();
+    geo.center();
+    const s = computeStats(positions);
+    lastStats = s;
+    priceBtn.disabled = false;
+    statsBox.innerHTML = `
+      <div class="stat"><div class="label">Volume</div><div class="value">${fmt(s.volume/1000)} cm³</div></div>
+      <div class="stat"><div class="label">Surface Area</div><div class="value">${fmt(s.area/100)} cm²</div></div>
+      <div class="stat"><div class="label">Bounding Box</div><div class="value">${fmt(s.dims[0])} × ${fmt(s.dims[1])} × ${fmt(s.dims[2])} mm</div></div>
+      <div class="stat"><div class="label">Triangles</div><div class="value">${s.triCount.toLocaleString()}</div></div>
+    `;
+    const mat = new THREE.MeshStandardMaterial({color: new THREE.Color(colorMaterialEl.value), metalness:0.15, roughness:0.55, side:THREE.DoubleSide});
+    currentMesh = new THREE.Mesh(geo, mat);
+    modelGroup.add(currentMesh);
+    const maxDim = Math.max(s.dims[0], s.dims[1], s.dims[2], 0.001);
+    camDist = maxDim * 1.6;
+    defaultCamDist = camDist;
+    modelGroup.rotation.copy(defaultRotation);
+
+    // Size the ground grid to roughly match the model footprint.
+    const gridSize = Math.max(maxDim * 1.4, 2);
+    grid.scale.setScalar(gridSize / 10);
+    grid.position.y = -(s.dims[1] / 2);
+
+    rightEmpty.style.display = 'none';
+    setToolbarEnabled(true);
+    autoRotate = false;
+    btnRotate.classList.remove('active');
+  }
+
+  // ---- PGN "typewriter" progress animation ----
+  // We don't get real progress info from the backend, so instead of a
+  // generic spinner, replay the PGN's moves one at a time (~1/sec) into the
+  // status area while we wait — it reads as the game being written out live,
+  // and loops back to the start if generation runs longer than the game.
+  function startPgnTypewriter(pgn){
+    const lines = pgn.split(/\r?\n/);
+    const moveText = lines.filter(l => !l.trim().startsWith('[')).join(' ').trim();
+    const tokens = moveText.split(/\s+/).filter(Boolean);
+
+    if (!tokens.length) {
+      setStatus(`Generating your model for:\n\n${pgn}\n\nThis can take a moment…`);
+      return () => {};
+    }
+
+    let i = 0;
+    function tick(){
+      const shown = tokens.slice(0, i + 1).join(' ');
+      setStatus(`Generating your model — replaying the game:\n\n${shown}▌`);
+      i = (i + 1) % tokens.length;
+    }
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }
+
+  // ---- main flow: call backend, fetch STL, preview ----
+  genBtn.addEventListener('click', async () => {
+    const pgn = pgnTextEl.value.trim();
+    const apiBase = apiBaseEl.value.trim().replace(/\/$/, '');
+    if (!pgn) { setStatus('Paste or upload a PGN first.', 'error'); return; }
+    if (!apiBase) { setStatus('Enter your backend API URL.', 'error'); return; }
+
+    genBtn.disabled = true;
+    statsBox.innerHTML = '';
+    priceBox.innerHTML = '';
+    priceBtn.disabled = true;
+    orderFields.style.display = 'none';
+    orderStatus.textContent = '';
+    lastStats = null;
+    const stopTypewriter = startPgnTypewriter(pgn);
+
+    try {
+      const res = await fetch(`${apiBase}/api/transform-positions`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({pgn})
+      });
+      if (!res.ok) {
+        let detail = res.statusText;
+        try { detail = (await res.json()).detail || detail; } catch(e){}
+        throw new Error(`Backend error (${res.status}): ${detail}`);
+      }
+      const data = await res.json();
+      const stlUrl = data.merged_stl_url.startsWith('http') ? data.merged_stl_url : apiBase + data.merged_stl_url;
+
+      const stlRes = await fetch(stlUrl);
+      if (!stlRes.ok) throw new Error(`Could not fetch STL (${stlRes.status}). Check that /merged is served correctly.`);
+      const buffer = await stlRes.arrayBuffer();
+
+      const positions = parseSTL(buffer);
+      if (positions.length === 0) throw new Error('Generated STL has no triangles.');
+      loadPositions(positions);
+      stopTypewriter();
+      setStatus('Model generated successfully.', 'ok');
+    } catch (err) {
+      stopTypewriter();
+      console.error(err);
+      let msg = err.message;
+      if (msg.includes('Failed to fetch')) {
+        msg += '\n\nThis is usually a CORS or connection issue: make sure the backend is running and its allow_origins includes this page\'s origin.';
+      }
+      setStatus(msg, 'error');
+    } finally {
+      genBtn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
