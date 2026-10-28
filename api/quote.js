@@ -12,13 +12,13 @@
 // ============================================================
 const PRICING = {
   perCm3: {
-    pla: 0.20, petg: 0.22, asa: 0.28, abs: 0.25, tpu: 0.35, pa: 0.40,   // FDM
-    resin: 0.60,                                                         // SLA
-    pa11: 1.00, pa12: 0.90,                                              // SLS
-    alu: 6.00, ss316: 8.00                                               // SLM
+    pla: 0.10, petg: 0.11, asa: 0.14, abs: 0.125, tpu: 0.175, pa: 0.20,   // FDM
+    resin: 0.30,                                                         // SLA
+    pa11: 0.50, pa12: 0.45,                                              // SLS
+    alu: 3.00, ss316: 4.00                                               // SLM
   },
-  setup: 10,
-  minimum: 25,
+  setup: 5,
+  minimum: 12.5,
   large: { overMm: 256, factor: 2 },
   volume: [ { min: 50, off: 0.20 }, { min: 10, off: 0.10 }, { min: 5, off: 0.05 }, { min: 1, off: 0 } ],
   delivery: { courier: { gr: 5, eu: 20 }, f2f: { gr: 100, eu: 1000 } }
