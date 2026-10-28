@@ -1,14 +1,12 @@
 /* OGCODE — instant quote from STL
    ================================================================
-   EDIT YOUR PRICES HERE.
-   - perCm3:  price per cm³ of part volume, in euros
-   - delivery: how the order reaches the customer; fee = fixed euros per region, added after the minimum
-   - setup:   fixed fee per different part (file), added once per file
-   - minimum: smallest order total
-   - volume:  quantity discounts on the material cost (first match wins)
-   Set EXAMPLE_RATES to false once these are your real numbers.
+   Prices per cm³, setup fee, minimum order, large-format factor and
+   quantity discounts are NOT here: they live on the server in
+   api/quote.js, so visitors never see them. This file only measures the
+   files and asks the server for the price.
+   Edit here: materials shown (labels, tolerances, build sizes), colours,
+   and delivery fees (shown on the page; keep them in step with api/quote.js).
    ================================================================ */
-var EXAMPLE_RATES = false;
 var CURRENCY = 'EUR';
 
 var PRICING = {
@@ -16,26 +14,26 @@ var PRICING = {
   processes: [
     {id:'fdm', label:'FDM', note:'plastic filament', tol:'±0.3 mm',      maxMm:[550,550,550],
      materials: [
-       {id:'pla',  label:'PLA',  perCm3:0.20},
-       {id:'petg', label:'PETG', perCm3:0.22},
-       {id:'asa',  label:'ASA',  perCm3:0.28},
-       {id:'abs',  label:'ABS',  perCm3:0.25},
-       {id:'tpu',  label:'TPU (flexible)', perCm3:0.35},
-       {id:'pa',   label:'PA (nylon)',     perCm3:0.40}
+       {id:'pla',  label:'PLA'},
+       {id:'petg', label:'PETG'},
+       {id:'asa',  label:'ASA'},
+       {id:'abs',  label:'ABS'},
+       {id:'tpu',  label:'TPU (flexible)'},
+       {id:'pa',   label:'PA (nylon)'}
      ]},
     {id:'sla', label:'SLA', note:'resin', tol:'±0.05–0.2 mm', maxMm:[800,800,600],
      materials: [
-       {id:'resin', label:'Resin', perCm3:0.60}
+       {id:'resin', label:'Resin'}
      ]},
     {id:'sls', label:'SLS', note:'nylon powder', tol:'±0.3 mm', maxMm:[220,220,220],
      materials: [
-       {id:'pa11', label:'PA11', perCm3:1.00},
-       {id:'pa12', label:'PA12', perCm3:0.90}
+       {id:'pa11', label:'PA11'},
+       {id:'pa12', label:'PA12'}
      ]},
     {id:'slm', label:'SLM', note:'metal powder', tol:'±0.1–0.2 mm', maxMm:[280,280,350],
      materials: [
-       {id:'alu',   label:'Aluminium',          perCm3:6.00},
-       {id:'ss316', label:'Stainless steel 316L', perCm3:8.00}
+       {id:'alu',   label:'Aluminium'},
+       {id:'ss316', label:'Stainless steel 316L'}
      ]}
   ],
   delivery: [
@@ -43,10 +41,6 @@ var PRICING = {
     {id:'f2f',     label:'By the owner', days:'the owner brings it to you by hand',            fee:{gr:100, eu:1000}}
   ],
   regions: [ {id:'gr', label:'Greece', f2f:'Athens area', lead:'about a week'}, {id:'eu', label:'Europe', lead:'about two weeks'} ],
-  setup: 10,      // per different part (file)
-  minimum: 25,    // smallest order total
-  large: {overMm: 256, factor: 2},   // parts with any side longer than this cost ×factor (material + setup)
-  volume: [ {min:50, off:0.20}, {min:10, off:0.10}, {min:5, off:0.05}, {min:1, off:0} ]
 };
 
 /* ---------- COLOURS ----------
@@ -125,9 +119,8 @@ var COLOURS = {
   var parts = [];            // {id,name,tris,volMm3,size:[x,y,z],qty,mesh}
   var nextId = 1;
 
-  if(EXAMPLE_RATES) $('#q-example').hidden = false;
   var MATS = [];
-  PRICING.processes.forEach(function(pr){ pr.materials.forEach(function(m){ MATS.push({id:m.id, label:m.label, perCm3:m.perCm3, proc:pr}); }); });
+  PRICING.processes.forEach(function(pr){ pr.materials.forEach(function(m){ MATS.push({id:m.id, label:m.label, proc:pr}); }); });
 
   // materials, grouped by technology
   $('#q-material').innerHTML = PRICING.processes.map(function(pr, pi){
@@ -441,19 +434,13 @@ var COLOURS = {
     calc();
   }
 
+  var priced = {seq:0, timer:0};
   function calc(){
     var u = unitScale();
     var mat = currentMat();
     var pieces = 0, cm3 = 0;
     parts.forEach(function(p){ pieces += p.qty; cm3 += p.qty * p.mesh.volMm3 * u*u*u / 1000; });
-    var off = (PRICING.volume.filter(function(v){ return pieces >= v.min; })[0] || {off:0}).off;
-    var isLarge = function(p){ return Math.max.apply(null, p.mesh.size) * u > PRICING.large.overMm; };
-    var nLarge = parts.filter(isLarge).length;
-    var material = 0, setup = 0; parts.forEach(function(p){ var k = isLarge(p) ? PRICING.large.factor : 1; material += k * p.qty * p.mesh.volMm3 * u*u*u / 1000 * mat.perCm3 * (1 + lookColour(partLook(p)).extra); setup += k * PRICING.setup; });
-    var discount = material * off;
     var eta = currentDelivery(), reg = currentRegion(), fee = eta.fee[reg.id];
-    var work = parts.length ? Math.max(PRICING.minimum, material - discount + setup) : 0;
-    var total = parts.length ? work + fee : 0;
     $('#t-files').textContent = parts.length;
     $('#t-pieces').textContent = pieces;
     $('#t-vol').textContent = num(cm3,2) + ' cm³';
@@ -466,16 +453,38 @@ var COLOURS = {
     $('#t-lead').textContent = reg.lead + (eta.id==='f2f' ? ', delivered by hand' : '');
     var tooBig = parts.filter(function(p){ return !fits(p.mesh.size.map(function(v){return v*u;}), mat.proc.maxMm); }).length;
     $('#t-big').hidden = !tooBig; $('#t-big').textContent = tooBig ? tooBig+' part'+(tooBig>1?'s are':' is')+' larger than the '+mat.proc.label+' build size. The price assumes it can be printed; we will confirm.' : '';
-    $('#t-large').hidden = !nLarge; $('#t-large').textContent = nLarge ? nLarge+' part'+(nLarge>1?'s have':' has')+' a side longer than '+PRICING.large.overMm+' mm, so '+(nLarge>1?'they are':'it is')+' priced at '+PRICING.large.factor+'× as a large-format print.' : '';
-    $('#t-price').textContent = parts.length ? fmt.format(Math.round(total)) : '—';
-    $('#t-min').hidden = !(parts.length && work === PRICING.minimum);
-    $('#q-send').disabled = !parts.length;
     var qf = $('#q-summary').form; if(qf) qf._extraFiles = parts.map(function(p){ return p.file; });   // the STLs go with the request
-    $('#q-summary').value = parts.length ? [
-      'Material: '+mat.label+' ('+mat.proc.label+', '+mat.proc.tol+')', 'Units: '+(u===1?'mm':'inch'),
-      parts.map(function(p){ var l = partLook(p), c = lookColour(l); return '- '+p.name+' × '+p.qty+': '+num(p.mesh.volMm3*u*u*u/1000,2)+' cm³, '+p.mesh.size.map(function(v){return num(v*u,1);}).join(' × ')+' mm'+(isLarge(p)?' (large format ×'+PRICING.large.factor+')':'')+', colour: '+lookLabel(l, mat)+(l.id==='custom'?' ['+l.hex+']':'')+(c.extra?' (+'+Math.round(c.extra*100)+'%)':''); }).join('\n'),
-      'Total volume: '+num(cm3,2)+' cm³ ('+pieces+' pieces)', 'Estimate: '+fmt.format(Math.round(total)), 'Delivery: '+eta.label+', '+reg.label+(eta.id==='f2f'&&reg.f2f?' ('+reg.f2f+')':'')+', '+reg.lead+', '+fmt.format(fee), 'Internal: material '+fmt.format(material)+(off?' −'+Math.round(off*100)+'%':'')+', setup '+fmt.format(setup)+', delivery '+fmt.format(fee), EXAMPLE_RATES?'(example rates)':''
-    ].join('\n') : '';
+
+    var seq = ++priced.seq;
+    clearTimeout(priced.timer);
+    if(!parts.length){
+      $('#t-price').textContent = '—'; $('#t-min').hidden = true; $('#t-large').hidden = true;
+      $('#q-send').disabled = true; $('#q-summary').value = ''; return;
+    }
+    $('#t-price').textContent = '…'; $('#q-send').disabled = true;
+    var snap = parts.map(function(p){ return {p:p, look:partLook(p)}; });
+    var payload = {material: mat.id, region: reg.id, delivery: eta.id, parts: snap.map(function(x){
+      return {cm3: x.p.mesh.volMm3*u*u*u/1000, maxMm: Math.max.apply(null, x.p.mesh.size)*u, qty: x.p.qty, extra: lookColour(x.look).extra};
+    })};
+    function finish(q){
+      if(seq !== priced.seq) return;   // a newer change is already being priced
+      var large = (q && q.large) || [], nLarge = large.filter(Boolean).length;
+      $('#t-price').textContent = q ? fmt.format(q.total) : 'On request';
+      $('#t-min').hidden = !(q && q.minimumApplied);
+      $('#t-large').hidden = !nLarge; $('#t-large').textContent = nLarge ? nLarge+' part'+(nLarge>1?'s have':' has')+' a side longer than '+q.largeOverMm+' mm, so '+(nLarge>1?'they are':'it is')+' priced at '+q.largeFactor+'× as a large-format print.' : '';
+      $('#q-send').disabled = false;
+      $('#q-summary').value = [
+        'Material: '+mat.label+' ('+mat.proc.label+', '+mat.proc.tol+')', 'Units: '+(u===1?'mm':'inch'),
+        snap.map(function(x, i){ var p = x.p, l = x.look, c = lookColour(l); return '- '+p.name+' × '+p.qty+': '+num(p.mesh.volMm3*u*u*u/1000,2)+' cm³, '+p.mesh.size.map(function(v){return num(v*u,1);}).join(' × ')+' mm'+(large[i]?' (large format ×'+q.largeFactor+')':'')+', colour: '+lookLabel(l, mat)+(l.id==='custom'?' ['+l.hex+']':'')+(c.extra?' (+'+Math.round(c.extra*100)+'%)':''); }).join('\n'),
+        'Total volume: '+num(cm3,2)+' cm³ ('+pieces+' pieces)', 'Estimate: '+(q ? fmt.format(q.total) : 'not available, please price manually'),
+        'Delivery: '+eta.label+', '+reg.label+(eta.id==='f2f'&&reg.f2f?' ('+reg.f2f+')':'')+', '+reg.lead+', '+fmt.format(fee)
+      ].join('\n');
+    }
+    priced.timer = setTimeout(function(){
+      fetch('/api/quote', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)})
+        .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+        .then(finish, function(){ finish(null); });
+    }, 250);
   }
 
   root.addEventListener('change', function(e){ if(e.target.name === 'material'){ buildSwatches(); render(); } if(e.target.name === 'unit') render(); if(e.target.name === 'delivery') calc(); if(e.target.name === 'region'){ paintDelivery(); calc(); } });
