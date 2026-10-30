@@ -95,14 +95,14 @@
 
     <label for="colorMaterial">Color / material</label>
     <div class="select"><select id="colorMaterial">
-      <option value="#FDFBF9" data-material="Standard PLA" data-price="1.26">Standard Resin - White</option>
-      <option value="#28282B" data-material="Standard PLA (Natural)" data-price="1.26">Standard Resin - Black</option>
-      <option value="#FFFFFF" data-material="Standard PLA (White)" data-price="3.00">Nylon - White</option>
-      <option value="#252324" data-material="Standard PLA (Black)" data-price="3.00">Nylon - Black</option>
-      <option value="#848789" data-material="Wood-fill PLA" data-price="3.00">Aluminium Alloy</option>
-      <option value="#CFD4D9" data-material="Marble-fill PLA" data-price="6.00">Stainless Steel 316L</option>
-      <option value="#B8860B" data-material="Bronze/Gold-fill (metal look)" data-price="300">Gold</option>
-      <option value="#c0c0c0" data-material="Steel/Silver-fill (metal look)" data-price="30">Silver</option>
+      <option value="#FDFBF9" data-material="Standard Resin - White" data-price="1.26">Standard Resin - White</option>
+      <option value="#28282B" data-material="Standard Resin - Black" data-price="1.26">Standard Resin - Black</option>
+      <option value="#FFFFFF" data-material="Nylon - White" data-price="3.00">Nylon - White</option>
+      <option value="#252324" data-material="Nylon - Black" data-price="3.00">Nylon - Black</option>
+      <option value="#848789" data-material="Aluminium Alloy" data-price="3.00">Aluminium Alloy</option>
+      <option value="#CFD4D9" data-material="Stainless Steel 316L" data-price="6.00">Stainless Steel 316L</option>
+      <option value="#B8860B" data-material="Gold" data-price="300">Gold</option>
+      <option value="#c0c0c0" data-material="Silver" data-price="30">Silver</option>
     </select></div>
     <div class="hint">The color only tints the 3D preview, but the material you pick here does feed the price estimate below.</div>
 
@@ -503,7 +503,7 @@ ${pgn}
     const pgn = pgnTextEl.value.trim();
     const apiBase = apiBaseEl.value.trim().replace(/\/$/, '');
     if (!pgn) { setStatus('Paste or upload a PGN first.', 'error'); return; }
-    if (!apiBase) { setStatus('Enter your backend API URL.', 'error'); return; }
+    if (!apiBase) { setStatus('The generator is not available right now.', 'error'); return; }
 
     genBtn.disabled = true;
     statsBox.innerHTML = '';
@@ -523,13 +523,13 @@ ${pgn}
       if (!res.ok) {
         let detail = res.statusText;
         try { detail = (await res.json()).detail || detail; } catch(e){}
-        throw new Error(`Backend error (${res.status}): ${detail}`);
+        throw new Error(detail || 'Something went wrong. Please try again.');
       }
       const data = await res.json();
       const stlUrl = data.merged_stl_url.startsWith('http') ? data.merged_stl_url : apiBase + data.merged_stl_url;
 
       const stlRes = await fetch(stlUrl);
-      if (!stlRes.ok) throw new Error(`Could not fetch STL (${stlRes.status}). Check that /merged is served correctly.`);
+      if (!stlRes.ok) throw new Error('Your model was built but could not be downloaded. Please try again.');
       const buffer = await stlRes.arrayBuffer();
 
       const positions = parseSTL(buffer);
@@ -542,7 +542,7 @@ ${pgn}
       console.error(err);
       let msg = err.message;
       if (msg.includes('Failed to fetch')) {
-        msg += '\n\nThis is usually a CORS or connection issue: make sure the backend is running and its allow_origins includes this page\'s origin.';
+        msg = 'Could not reach the generator. It sleeps when nobody has used it for a while, so the first try can take up to a minute. Please try again.';
       }
       setStatus(msg, 'error');
     } finally {
