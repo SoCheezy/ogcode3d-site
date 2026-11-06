@@ -700,3 +700,9 @@ section[id],[id].block,.pagehead,.sec-head,h1,h2{scroll-margin-top:calc(env(safe
 .pay-logos{display:block}
 .pay-logos img{display:block;width:100%;height:auto;max-width:429px}
 @media (max-width:519px){.pay-logos img{max-width:276px}}
+
+/* Phones zoom into any text box under 16px when tapped. Keep boxes at 16px on touch screens so
+   tapping (e.g. to paste a PGN) never zooms the page; pinch-to-zoom still works. */
+@media (hover:none) and (pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea{font-size:16px !important}
+}
