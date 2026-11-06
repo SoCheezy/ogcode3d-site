@@ -81,7 +81,7 @@ var MAX_FILES = 5, MAX_FILE_MB = 10;
   var yr=document.getElementById('yr'); if(yr) yr.textContent=new Date().getFullYear();
 
   // close mobile menu after picking a link
-  document.querySelectorAll('.menu .drop a').forEach(function(a){a.addEventListener('click',function(){a.closest('details').open=false})});
+  document.querySelectorAll('.menu .menu-drop a').forEach(function(a){a.addEventListener('click',function(){a.closest('details').open=false})});
 })();
 
 /* File pickers (project brief): keep a list the visitor can add to and remove from. */
